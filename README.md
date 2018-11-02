@@ -41,7 +41,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 1. banner: 首页轮播图
 2. card: 单个商品卡片（图、标题、价格）,热租商品和推荐商品中引用
-3. 
+3.
 
 ### pages
 
@@ -71,3 +71,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 12. order_detail.vue 订单详情
 13. address.vue 地址管理
 14. login.vue 登录注册
+
+ >this is test

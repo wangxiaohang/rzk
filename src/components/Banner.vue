@@ -1,8 +1,10 @@
 <template>
 <div class="banner">
   <div class="banner-container">
-    <div class="banner-wrapper" :style="{translate}">
-      <div v-for="(url,id) of bannerURLs" :key="id" :class="{'banner-item':true,'active':!id}" :style="{'backgroundImage':'url('+url+')'}"></div>
+    <div class="banner-wrapper" :style="{'width':wraperWidth,'transform':'translate3d(' + x + ',0,0)'}">
+      <div class="banner-item" :style="{'backgroundImage':'url('+bannerURLs[bannerURLs.length-1]+')','width':itemWidth}"></div>
+      <div v-for="(url,id) of bannerURLs" :key="id" :class="{'banner-item':true,'active':!id}" :style="{'backgroundImage':'url('+url+')','width':itemWidth}"></div>
+      <div class="banner-item" :style="{'backgroundImage':'url('+bannerURLs[0]+')','width':itemWidth}"></div>
     </div>
   </div>
   <div class="banner-indicator">
@@ -15,14 +17,10 @@ export default {
   name: 'Banner',
   data () {
     return {
+      xdist: 100 / (this.bannerURLs.length + 2),
       x: 0,
-      translate: {
-        transform: 'translate3d(' + this.x + ',0,0)',
-        webkitTransform: 'translate3d(' + this.x + ',0,0)',
-        mozTransform: 'translate3d(' + this.x + ',0,0)',
-        msTransform: 'translate3d(' + this.x + ',0,0)',
-        oTransform: 'translate3d(' + this.x + ',0,0)'
-      }
+      wraperWidth: (this.bannerURLs.length + 2) * 100 + '%',
+      itemWidth: 100 / (this.bannerURLs.length + 2) + '%'
     }
   },
   methods: {
@@ -32,6 +30,7 @@ export default {
     },
     scrollBanner () {
       console.log('开始滚动')
+      this.x = '-' + this.xdist + '%'
       setInterval(() => {
 
       }, 1000)
@@ -48,13 +47,15 @@ export default {
 </script>
 <style lang="stylus" scoped>
 common-border-radius = 6px
+
 translate(x,y,z)
   transform translate3d(x,y,z)
   -webkit-transform translate3d(x,y,z)
   -moz-transform translate3d(x,y,z)
   -ms-transform translate3d(x,y,z)
   -o-transform translate3d(x,y,z)
-transition(pro = 'all',dur = '.3s',fun = 'ease-in')
+
+transition(pro = all,dur = .3s,fun = ease-in)
   transition pro dur fun
   -webkit-transition pro dur fun
   -moz-transition pro dur fun
@@ -73,16 +74,15 @@ transition(pro = 'all',dur = '.3s',fun = 'ease-in')
     border-radius common-border-radius
 
     .banner-wrapper
-      width 300%
-      display flex
       height 100%
-      transition(transform)
+      will-change transform
+      transition()
 
       .banner-item
-        width 33.3333%
+        float left
         height 100%
         background-repeat no-repeat
-        background-posiiton center
+        background-position center
         background-size cover
 
   .banner-indicator

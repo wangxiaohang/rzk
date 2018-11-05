@@ -22,7 +22,14 @@ export default new Router({
     {
       path: '/category',
       name: 'Category',
-      component: Category
+      component: Category,
+      children: [ // 这里就是二级路由
+        {
+          path: '/category/:id',
+          name: 'Category',
+          component: Category
+        }
+        ]
     },
     {
       path: '/cart',

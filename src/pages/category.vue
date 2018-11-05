@@ -18,17 +18,21 @@
       <div class="right">
         <div class="category-right-wrap">
           <div class="category-banner">
-            <Banner :bannerURLs="bannerURLs"></Banner>
+            <img :src="bannerURLs[0]" alt="">
           </div>
           <ul class="category-right-ul">
-            <li class="category-right-item" v-for="(item, index) in phoneList">
+            <li if="navIndex==7" class="category-right-item" v-for="(item, index) in phoneList">
               <a :href="item.link">
                 <img :src="item.pic" alt="" />
                 <p>{{item.title}}</p>
               </a>
             </li>
+            <div else>
+              {{navIndex}}
+            </div>
           </ul>
-          {{navIndex}}
+
+
         </div>
       </div>
     </div>
@@ -37,9 +41,7 @@
   </div>
 </template>
 <script>
-  import Banner from '@/components/Banner.vue'
   import JsonPhone from '@/json/phone.json'
-
   export default {
     name: 'category',
     data() {
@@ -95,23 +97,27 @@
       }
     },
     components: {
-      Banner
     },
     created: function () {
+      this.navIndex = this.$route.params.id
       document.title = '商品分类'
     },
     methods: {
       navClickFn: function (index) {
-        console.info(index)
+        //console.info(index)
         this.navIndex = index
+        this.$route.params.id =index
+        this.$router.push({path:'/category/'+index});
+
+
       }
     },
     mounted() {
       var self = this
-      //hot
-      self.phoneList = JsonPhone.lists
-
-
+      //phone
+      if(self.navIndex == 7){
+        self.phoneList = JsonPhone.lists
+      }
 
     }
   }
@@ -138,15 +144,22 @@
           font-weight 600
       div.right
         width 80%
+        overflow-y scroll
         .category-right-wrap
           width 100%
           text-align center
           font-size 12px
+          .category-banner
+            width 100%
+            margin-bottom 20px
+            img
+              width 240px
+              margin-left 8px
           li.category-right-item
-            width 80px
-            margin-bottom 15px
+            width 33.3%
+            margin-bottom 30px
             display inline-block
             img
-              width 60px
+              width 40px
 
 </style>

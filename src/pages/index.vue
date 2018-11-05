@@ -9,11 +9,13 @@
       <p class="placeholder">搜索你想要的宝贝吧~</p>
   </div>
   <Banner :bannerURLs="bannerURLs"></Banner>
+  <Hotsite :hotsites="hotsites"></Hotsite>
 </div>
 </template>
 
 <script>
 import Banner from '@/components/Banner.vue'
+import Hotsite from '@/components/Hotsite.vue'
 export default {
   name: 'index',
   data () {
@@ -22,11 +24,39 @@ export default {
         '/static/img/big_shop1.png',
         '/static/img/big_shop2.png',
         '/static/img/big_shop3.png'
+      ],
+      hotsites: [
+        {
+          img: '/static/img/icon1.png',
+          title: '电玩娱乐'
+        }, {
+          img: '/static/img/icon2.png',
+          title: '办公用品'
+        }, {
+          img: '/static/img/icon3.png',
+          title: '智能生活'
+        }, {
+          img: '/static/img/icon4.png',
+          title: '居家常用'
+        }, {
+          img: '/static/img/icon5.png',
+          title: '户外活动'
+        }, {
+          img: '/static/img/icon6.png',
+          title: '3C数码'
+        }, {
+          img: '/static/img/icon7.png',
+          title: '儿童玩具'
+        }, {
+          img: '/static/img/icon8.png',
+          title: '更多'
+        }
       ]
     }
   },
   components: {
-    Banner
+    Banner,
+    Hotsite
   }
 }
 </script>

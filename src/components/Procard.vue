@@ -1,6 +1,6 @@
 <template>
 <div :class="['procard',lines==2?'twe':'three']">
-  <div class="img" :style="{'background':'url('+info.img+')'}"></div>
+  <div class="img" :style="{'backgroundImage':'url('+info.img+')'}"></div>
   <p class="tit">{{ info.title }}</p>
   <p class="price">{{ info.price }}</p>
 </div>

@@ -1,89 +1,70 @@
 <template>
 <div class="banner">
-  <div class="banner-container">
-    <div class="banner-wrapper" :style="{'width':wraperWidth,'transform':'translate3d(' + x + ',0,0)'}">
-      <div class="banner-item" :style="{'backgroundImage':'url('+bannerURLs[bannerURLs.length-1]+')','width':itemWidth}"></div>
-      <div v-for="(url,id) of bannerURLs" :key="id" :class="{'banner-item':true,'active':!id}" :style="{'backgroundImage':'url('+url+')','width':itemWidth}"></div>
-      <div class="banner-item" :style="{'backgroundImage':'url('+bannerURLs[0]+')','width':itemWidth}"></div>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" v-for="(url,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+url+')'}"></div>
     </div>
   </div>
   <div class="banner-indicator">
-    <div v-for="(url,id) of bannerURLs" :key="id" :class="{'indicator':true,'active':!id}"></div>
+    <div v-for="(url,id) of bannerURLs" :key="id" :class="{'indicator':true,'active':activeIndex==id}"></div>
   </div>
 </div>
 </template>
 <script>
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 export default {
   name: 'Banner',
   data () {
     return {
-      xdist: 100 / (this.bannerURLs.length + 2),
-      x: 0,
-      wraperWidth: (this.bannerURLs.length + 2) * 100 + '%',
-      itemWidth: 100 / (this.bannerURLs.length + 2) + '%'
+      bannerSwiper: null,
+      activeIndex: 0
     }
   },
+  computed: {
+  },
   methods: {
-    swiper () {
-      this.scrollBanner()
-      this.reactBanner()
-    },
-    scrollBanner () {
-      console.log('开始滚动')
-      this.x = '-' + this.xdist + '%'
-      setInterval(() => {
-
-      }, 1000)
-    },
-    reactBanner () {
-      console.log('绑定动作')
-    }
   },
   props: ['bannerURLs'],
   mounted: function () {
-    this.swiper()
+    var that = this
+    this.bannerSwiper = new Swiper('.swiper-container', {
+      autoplay: {
+        stopOnLastSlide: false,
+        disableOnInteraction: false
+      },
+      loop: true,
+      on: {
+        slideChange: function () {
+          if (this.activeIndex === 0) {
+            that.activeIndex = that.bannerURLs.length - 1
+          } else if (this.activeIndex === that.bannerURLs.length - 0 + 1) {
+            that.activeIndex = 0
+          } else {
+            that.activeIndex = this.activeIndex - 1
+          }
+        }
+      }
+    })
   }
 }
 </script>
 <style lang="stylus" scoped>
 common-border-radius = 6px
-
-translate(x,y,z)
-  transform translate3d(x,y,z)
-  -webkit-transform translate3d(x,y,z)
-  -moz-transform translate3d(x,y,z)
-  -ms-transform translate3d(x,y,z)
-  -o-transform translate3d(x,y,z)
-
-transition(pro = all,dur = .3s,fun = ease-in)
-  transition pro dur fun
-  -webkit-transition pro dur fun
-  -moz-transition pro dur fun
-  -ms-transition pro dur fun
-  -o-transition pro dur fun
-
 .banner
   width 100%
   height 170px
   position relative
 
-  .banner-container
-    width: 100%
-    height 150px
-    overflow hidden
+  .swiper-container
+    height: 150px
     border-radius common-border-radius
+    overflow hidden
 
-    .banner-wrapper
-      height 100%
-      will-change transform
-      transition()
-
-      .banner-item
-        float left
-        height 100%
-        background-repeat no-repeat
-        background-position center
-        background-size cover
+    .swiper-slide
+      background-repeat no-repeat
+      background-position center
+      background-size cover
 
   .banner-indicator
     position absolute
@@ -103,6 +84,8 @@ transition(pro = all,dur = .3s,fun = ease-in)
       translate(0,-50%,0)
       transition(all)
       margin-left 5px
+      transition all .1s linear
+      will-change width
     .indicator:first-child
       margin-left 0
 

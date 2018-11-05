@@ -1,20 +1,152 @@
 <template>
   <div id="category">
     <header>
-      分类
+      <div class="left">分类</div>
+      <div class="right"></div>
     </header>
+    <div class="category-shop">
+      <nav class="left">
+        <ul class="categor-right-ul">
+          <li v-for="(item,index) in naveLeftData"
+              :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
+              v-on:click="navClickFn(index)">
+            {{ item.des }}
+          </li>
+        </ul>
+      </nav>
+
+      <div class="right">
+        <div class="category-right-wrap">
+          <div class="category-banner">
+            <Banner :bannerURLs="bannerURLs"></Banner>
+          </div>
+          <ul class="category-right-ul">
+            <li class="category-right-item" v-for="(item, index) in phoneList">
+              <a :href="item.link">
+                <img :src="item.pic" alt="" />
+                <p>{{item.title}}</p>
+              </a>
+            </li>
+          </ul>
+          {{navIndex}}
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 <script>
-export default {
-  name: 'category',
-  data () {
-    return {}
-  },
-  created: function () {
-    document.title = '商品分类'
-  },
-  methods: {
+  import Banner from '@/components/Banner.vue'
+  import JsonPhone from '@/json/phone.json'
+
+  export default {
+    name: 'category',
+    data() {
+      return {
+        navIndex: 0,
+        naveLeftData: [
+          {
+            id: 1,
+            des: "热租商品"
+          },
+          {
+            id: 2,
+            des: "电娱玩乐"
+          },
+          {
+            id: 3,
+            des: "办公用品"
+          }
+          ,
+          {
+            id: 4,
+            des: "智能生活"
+          },
+          {
+            id: 5,
+            des: "品牌手机"
+          },
+          {
+            id: 6,
+            des: "3C数码"
+          },
+          {
+            id: 7,
+            des: "居家常用"
+          },
+          {
+            id: 8,
+            des: "生活家电"
+          },
+          {
+            id: 9,
+            des: "儿童玩具"
+          },
+          {
+            id: 10,
+            des: "户外活动"
+          }
+        ],
+        bannerURLs: [
+          '/static/img/big_shop3.png'
+        ],
+        phoneList:[]
+      }
+    },
+    components: {
+      Banner
+    },
+    created: function () {
+      document.title = '商品分类'
+    },
+    methods: {
+      navClickFn: function (index) {
+        console.info(index)
+        this.navIndex = index
+      }
+    },
+    mounted() {
+      var self = this
+      //hot
+      self.phoneList = JsonPhone.lists
+
+
+
+    }
   }
-}
 </script>
+
+<style lang="stylus" scoped>
+  #category
+    width 100%
+    .category-shop
+      width 100%
+      margin-top 20px
+      display flex
+      nav.left
+        width 20%
+        .category-left-item
+          display block
+          text-align center
+          font-size 12px
+          height 40px
+          line-height 40px
+          color grey
+        .category-left-item.active
+          color black
+          font-weight 600
+      div.right
+        width 80%
+        .category-right-wrap
+          width 100%
+          text-align center
+          font-size 12px
+          li.category-right-item
+            width 80px
+            margin-bottom 15px
+            display inline-block
+            img
+              width 60px
+
+</style>

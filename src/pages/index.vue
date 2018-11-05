@@ -10,12 +10,26 @@
   </div>
   <Banner :bannerURLs="bannerURLs"></Banner>
   <Hotsite :hotsites="hotsites"></Hotsite>
+  <div class="plays">
+    <p class="title">全新玩法</p>
+    <div class="cards">
+      <Playcard v-for="(tip,id) of playTips" :key="id" :classname="id===0?'left':'right'" :title="tip.title" :des="tip.des"></Playcard>
+    </div>
+  </div>
+  <div class="hotpros">
+    <p class="title">热租商品<a href="javascript:void(0)">更多 &gt;</a></p>
+    <div class="procards three">
+      <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
+    </div>
+  </div>
 </div>
 </template>
 
 <script>
 import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
+import Playcard from '@/components/Playcard.vue'
+import Procard from '@/components/Procard.vue'
 export default {
   name: 'index',
   data () {
@@ -51,12 +65,38 @@ export default {
           img: '/static/img/icon8.png',
           title: '更多'
         }
+      ],
+      playTips: [
+        {
+          title: '玩法介绍',
+          des: '开启潮租生活新体验'
+        }, {
+          title: '包月任租',
+          des: '畅享0元租金随租随还'
+        }
+      ],
+      hotProsInfo: [
+        {
+          img: '/static/img/shop1.png',
+          title: '智能儿童手表',
+          price: '￥50/天'
+        }, {
+          img: '/static/img/shop2.png',
+          title: '龙卷风榨汁杯',
+          price: '￥20/天'
+        }, {
+          img: '/static/img/shop3.png',
+          title: '智能拉杆行李箱',
+          price: '￥88/天'
+        }
       ]
     }
   },
   components: {
     Banner,
-    Hotsite
+    Hotsite,
+    Playcard,
+    Procard
   }
 }
 </script>
@@ -104,4 +144,9 @@ translate(x,y,z)
     width 12px
     height 12px
     background url('../assets/img/index/search.png') no-repeat center/cover
+
+.plays .cards,
+.procards.three
+    display flex
+    justify-content space-between
 </style>

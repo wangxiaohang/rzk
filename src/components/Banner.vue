@@ -1,6 +1,6 @@
 <template>
 <div class="banner">
-  <div class="swiper-container">
+  <div class="swiper-container" id="banner-swiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(url,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+url+')'}"></div>
     </div>
@@ -12,7 +12,6 @@
 </template>
 <script>
 import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
 export default {
   name: 'Banner',
   data () {
@@ -28,7 +27,7 @@ export default {
   props: ['bannerURLs'],
   mounted: function () {
     var that = this
-    this.bannerSwiper = new Swiper('.swiper-container', {
+    this.bannerSwiper = new Swiper('#banner-swiper', {
       autoplay: {
         stopOnLastSlide: false,
         disableOnInteraction: false

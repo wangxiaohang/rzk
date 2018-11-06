@@ -1,14 +1,21 @@
 <template>
-  <div id="app-bottom">
-    <Icon v-for="(todo,index) in IconData" :Icon="todo" @click="change(index)" :key="index"></Icon>
+  <div class="bottom">
+    <router-link class="item" v-for="(item,index) in IconData" :key="index" :to="item.href">
+      <img :src="item.urlNone" class="none" />
+      <img :src="item.urlActive" class="active" />
+      {{ item.des }}
+    </router-link>
   </div>
 </template>
 <script>
-import IconURL0 from '../assets/page_none.png'
-import IconURL1 from '../assets/list_none.png'
-import IconURL2 from '../assets/shopcar_none.png'
-import IconURL3 from '../assets/mine_none.png'
-import Icon from '@/components/Icon.vue'
+import IconURL0 from '@/assets/img/page_none.png'
+import IconURL1 from '@/assets/img/list_none.png'
+import IconURL2 from '@/assets/img/shopcar_none.png'
+import IconURL3 from '@/assets/img/mine_none.png'
+import IconURL4 from '@/assets/img/page_active.png'
+import IconURL5 from '@/assets/img/list_active.png'
+import IconURL6 from '@/assets/img/shopcar_active.png'
+import IconURL7 from '@/assets/img/mine_active.png'
 
 export default {
   name: 'Bottom',
@@ -16,33 +23,28 @@ export default {
     return {
       IconData: [{
         des: '首页',
-        href: '/rzk/',
-        Url: IconURL0
-      },
-      {
+        href: '/main/index',
+        urlNone: IconURL0,
+        urlActive: IconURL4
+      }, {
         des: '分类列表',
-        href: '/rzk/category',
-        Url: IconURL1
-      },
-      {
+        href: '/category/0',
+        urlNone: IconURL1,
+        urlActive: IconURL5
+      }, {
         des: '购物车',
-        href: '/rzk/cart',
-        Url: IconURL2
-      },
-      {
+        href: '/main/cart',
+        urlNone: IconURL2,
+        urlActive: IconURL6
+      }, {
         des: '我的',
-        href: '/rzk/user',
-        Url: IconURL3
+        href: '/main/user',
+        urlNone: IconURL3,
+        urlActive: IconURL7
       }]
     }
   },
-  components: {
-    Icon
-  },
   methods: {
-    change: function (index) {
-      console.info(index)
-    }
   }
 }
 </script>

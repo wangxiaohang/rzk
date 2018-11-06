@@ -7,7 +7,7 @@ header
 
   .left
     float left
-  
+
   .right
     float right
 
@@ -40,3 +40,32 @@ div.img
   background-repeat no-repeat
   background-position center
   background-size cover
+//底部Icon
+.bottom
+  position absolute
+  bottom 0
+  display flex
+  width 100%
+  padding 6px 0
+  height 60px
+  background #fff
+
+  .item
+    display block
+    width 25%
+    text-align center
+    font-size 12px
+    line-height 20px
+
+    img
+      margin 0 auto
+    img.none
+      display block
+    img.active
+      display none
+
+  .item.router-link-active
+    img.none
+      display none
+    img.active
+      display block

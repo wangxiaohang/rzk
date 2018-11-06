@@ -1,7 +1,7 @@
 <template>
-<div class="hotsite">
+<div class="hotsite clearfix">
   <div class="item" v-for="(item,id) of hotsites" :key="id">
-    <div :style="{'backgroundImage':'url('+item.img+')'}"></div>
+    <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
     <p>{{ item.title }}</p>
   </div>
 </div>
@@ -28,9 +28,6 @@ export default {
       width 40px
       height 40px
       margin 6px auto
-      background-repeat no-repeat
-      background-position center
-      background-size cover
 
     p
       white-space nowrap

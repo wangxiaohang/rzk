@@ -13,16 +13,28 @@
 </div>
 </template>
 <style lang="stylus" scoped>
+.app
+  width 100%
+  height 100%
+  overflow hidden
+  position relative
+
 .content
   padding 0px 8px 68px
+  width 100%
+  position absolute
+  top 0
+  bottom 60px
+  overflow auto
 
 .bottom
-  position fixed
+  position absolute
   bottom 0
   display flex
   width 100%
   padding 6px 0
   height 60px
+  background #fff
 
   .item
     display block

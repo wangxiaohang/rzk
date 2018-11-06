@@ -22,10 +22,31 @@
       <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
     </div>
   </div>
+  <div class="topics">
+    <p class="title">精选专题<a href="javascript:void(0)">更多 &gt;</a></p>
+    <div class="cards">
+      <div class="swiper-container" id="topic-swiper">
+        <div class="swiper-wrapper">
+          <div v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
+            <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
+            <p>{{ item.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="recommandPros">
+    <p class="title">精选商品<a href="javascript:void(0)">更多 &gt;</a></p>
+    <div class="pros">
+      <Procard v-for="(info,id) of products" :key="id" :info="info" :lines="'2'"></Procard>
+    </div>
+  </div>
 </div>
 </template>
 
 <script>
+import Swiper from 'swiper'
+import productsJson from '@/json/products.json'
 import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
@@ -34,6 +55,8 @@ export default {
   name: 'index',
   data () {
     return {
+      topicSwiper: null,
+      products: null,
       bannerURLs: [
         '/static/img/big_shop1.png',
         '/static/img/big_shop2.png',
@@ -89,8 +112,31 @@ export default {
           title: '智能拉杆行李箱',
           price: '￥88/天'
         }
+      ],
+      recommandTopics: [
+        {
+          img: '/static/img/big_shop1.png',
+          title: '秋品换新节，鞋包配饰全场享直价'
+        }, {
+          img: '/static/img/big_shop2.png',
+          title: '精品人气好物推荐，共享精致生活'
+        }
       ]
     }
+  },
+  created () {
+    this.products = productsJson
+  },
+  mounted () {
+    this.topicSwiper = new Swiper('#topic-swiper', {
+      direction: 'horizontal',
+      loop: false,
+      autoplay: false,
+      slidesPerView: 'auto',
+      slidesOffsetBefore: 8,
+      slidesOffsetAfter: 8
+      // spaceBetween: 20
+    })
   },
   components: {
     Banner,
@@ -149,4 +195,33 @@ translate(x,y,z)
 .procards.three
     display flex
     justify-content space-between
+
+.topics
+  height 160px
+  position relative
+  .cards
+    position absolute
+    left -8px
+    right -8px
+    height 130px
+  .swiper-container
+    height 130px
+    .swiper-slide
+      width 70%
+      overflow hidden
+      position relative
+      .img
+        width: 100%
+        position absolute
+        top 0
+        bottom 30px
+        border-radius common-border-radius
+      p
+        line-height 30px
+        font-size 12px
+        position absolute
+        bottom 0
+        color #000
+    .swiper-slide:first-child
+      margin-right 20px
 </style>

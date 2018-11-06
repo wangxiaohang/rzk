@@ -20,7 +20,7 @@
   position relative
 
 .content
-  padding 0px 8px 68px
+  padding 0px 8px 8px
   width 100%
   position absolute
   top 0

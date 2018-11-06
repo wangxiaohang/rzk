@@ -31,7 +31,7 @@ export default {
     line-height 16px
 
 .twe
-  width 49.5%
+  width 48%
 .twe:nth-child(2n)
   float right
 .twe:nth-child(2n+1)

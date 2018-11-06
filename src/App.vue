@@ -77,7 +77,7 @@ export default {
       },
       {
         des: '分类列表',
-        href: '/category',
+        href: '/category/0',
         urlNone: IconURL1,
         urlActive: IconURL5
       },

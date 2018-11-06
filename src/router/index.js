@@ -6,6 +6,9 @@ import Category from '@/pages/category'
 import CategoryFromId from '@/components/CategoryFromId'
 import User from '@/pages/user'
 import Cart from '@/pages/cart'
+import Hots from '@/pages/hots'
+import Topics from '@/pages/topics'
+import List from '@/pages/list'
 
 Vue.use(Router)
 
@@ -45,6 +48,18 @@ export default new Router({
           component: User
         }
       ]
+    },
+    {
+      path: '/hots',
+      component: Hots
+    },
+    {
+      path: '/topics',
+      component: Topics
+    },
+    {
+      path: '/list',
+      component: List
     }
   ]
 })

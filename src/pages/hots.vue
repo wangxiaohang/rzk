@@ -1,18 +1,17 @@
 <template>
-  <div id="hot">
-    热租页面
-  </div>
+<div id="hot">
+  <Header :title="'热租商品'" :backpath="'/main/index'"></Header>
+</div>
 </template>
 <script>
+import Header from '@/components/Header'
 export default {
   name: 'hot',
   data () {
     return {}
   },
-  created: function () {
-    document.title = '热租'
-  },
-  methods: {
+  components: {
+    Header
   }
 }
 </script>

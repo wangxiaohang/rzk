@@ -17,13 +17,13 @@
     </div>
   </div>
   <div class="hotpros">
-    <p class="title">热租商品<a href="javascript:void(0)">更多 &gt;</a></p>
+    <p class="title">热租商品<router-link to="/hots">更多 &gt;</router-link></p>
     <div class="procards three">
       <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
     </div>
   </div>
   <div class="topics">
-    <p class="title">精选专题<a href="javascript:void(0)">更多 &gt;</a></p>
+    <p class="title">精选专题<router-link to="/topics">更多 &gt;</router-link></p>
     <div class="cards">
       <div class="swiper-container" id="topic-swiper">
         <div class="swiper-wrapper">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="recommandPros">
-    <p class="title">精选商品<a href="javascript:void(0)">更多 &gt;</a></p>
+    <p class="title">精选商品<router-link to="/list">更多 &gt;</router-link></p>
     <div class="pros">
       <Procard v-for="(info,id) of products" :key="id" :info="info" :lines="'2'"></Procard>
     </div>

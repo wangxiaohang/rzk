@@ -21,18 +21,14 @@
             <img :src="bannerURLs[0]" alt="">
           </div>
           <ul class="category-right-ul">
-            <li if="navIndex==7" class="category-right-item" v-for="(item, index) in phoneList">
+            <li class="category-right-item" v-for="(item, index) in phoneList">
               <a :href="item.link">
-                <img :src="item.pic" alt="" />
+                <img :src="item.pic" alt=""/>
                 <p>{{item.title}}</p>
               </a>
             </li>
-            <div else>
-              {{navIndex}}
-            </div>
           </ul>
-
-
+          {{navIndex}}
         </div>
       </div>
     </div>
@@ -41,86 +37,86 @@
   </div>
 </template>
 <script>
-  import JsonPhone from '@/json/phone.json'
-  export default {
-    name: 'category',
-    data() {
-      return {
-        navIndex: 0,
-        naveLeftData: [
-          {
-            id: 1,
-            des: "热租商品"
-          },
-          {
-            id: 2,
-            des: "电娱玩乐"
-          },
-          {
-            id: 3,
-            des: "办公用品"
-          }
-          ,
-          {
-            id: 4,
-            des: "智能生活"
-          },
-          {
-            id: 5,
-            des: "品牌手机"
-          },
-          {
-            id: 6,
-            des: "3C数码"
-          },
-          {
-            id: 7,
-            des: "居家常用"
-          },
-          {
-            id: 8,
-            des: "生活家电"
-          },
-          {
-            id: 9,
-            des: "儿童玩具"
-          },
-          {
-            id: 10,
-            des: "户外活动"
-          }
-        ],
-        bannerURLs: [
-          '/static/img/big_shop3.png'
-        ],
-        phoneList:[]
-      }
-    },
-    components: {
-    },
-    created: function () {
-      this.navIndex = this.$route.params.id
-      document.title = '商品分类'
-    },
-    methods: {
-      navClickFn: function (index) {
-        //console.info(index)
-        this.navIndex = index
-        this.$route.params.id =index
-        this.$router.push({path:'/category/'+index});
+import JsonPhone from '@/json/phone.json'
 
-
-      }
-    },
-    mounted() {
-      var self = this
-      //phone
-      if(self.navIndex == 7){
-        self.phoneList = JsonPhone.lists
-      }
-
+export default {
+  name: 'category',
+  data() {
+    return {
+      navIndex: 0,
+      naveLeftData: [{
+        id: 0,
+        des: '热租商品'
+      },
+        {
+          id: 1,
+          des: '电娱玩乐'
+        },
+        {
+          id: 2,
+          des: '办公用品'
+        },
+        {
+          id: 3,
+          des: '智能生活'
+        },
+        {
+          id: 4,
+          des: '品牌手机'
+        },
+        {
+          id: 5,
+          des: '3C数码'
+        },
+        {
+          id: 6,
+          des: '居家常用'
+        },
+        {
+          id: 7,
+          des: '生活家电'
+        },
+        {
+          id: 8,
+          des: '儿童玩具'
+        },
+        {
+          id: 9,
+          des: '户外活动'
+        }],
+      bannerURLs: [
+        '/static/img/big_shop3.png'
+      ],
+      phoneList: []
+    }
+  },
+  components: {},
+  watch: {
+    '$route'(to, from) {
+      this.$router.go(0);
+    }
+  },
+  created: function () {
+    this.navIndex = this.$route.params.id ? this.$route.params.id : 0
+    document.title = '商品分类'
+  },
+  methods: {
+    navClickFn: function (index) {
+      //console.info(index)
+      this.navIndex = index
+      this.$route.params.id = index
+      this.$router.push({
+        path: '/category/' + index
+      });
+    }
+  },
+  mounted() {
+    var self = this
+    if (self.navIndex === 4) {
+      self.phoneList = JsonPhone.lists
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>

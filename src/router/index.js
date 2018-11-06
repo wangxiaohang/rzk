@@ -26,10 +26,10 @@ export default new Router({
       children: [ // 这里就是二级路由
         {
           path: '/category/:id',
-          name: 'Category',
+          name: 'CategoryId',
           component: Category
         }
-        ]
+      ]
     },
     {
       path: '/cart',

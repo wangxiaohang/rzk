@@ -23,21 +23,11 @@ export default new Router({
       path: '/main',
       name: 'main',
       component: Main,
+      redirect: '/main/index',
       children: [
         {
           path: 'index',
           component: Index
-        }, {
-          path: 'category',
-          name: 'Category',
-          component: Category,
-          children: [ // 这里就是二级路由
-            {
-              path: 'category/:id',
-              name: 'CategoryId',
-              component: CategoryFromId
-            }
-          ]
         }, {
           path: 'cart',
           name: 'Cart',
@@ -48,16 +38,25 @@ export default new Router({
           component: User
         }
       ]
-    },
-    {
+    }, {
+      path: '/category',
+      name: 'Category',
+      redirect: '/category/0',
+      component: Category,
+      children: [ // 这里就是二级路由
+        {
+          path: '/category/:id',
+          name: 'CategoryId',
+          component: CategoryFromId
+        }
+      ]
+    }, {
       path: '/hots',
       component: Hots
-    },
-    {
+    }, {
       path: '/topics',
       component: Topics
-    },
-    {
+    }, {
       path: '/list',
       component: List
     }

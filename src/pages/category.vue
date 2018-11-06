@@ -1,26 +1,28 @@
 <template>
-<div id="category">
-  <header>
-    <div class="left">分类</div>
-    <div class="right"></div>
-  </header>
-  <div class="category-shop">
-    <nav class="left">
-      <ul class="categor-right-ul">
-        <li v-for="(item,index) in naveLeftData" :key="index"
-            :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
-            v-on:click="navClickFn(index)">
-          {{ item.des }}
-        </li>
-      </ul>
-    </nav>
-    <div class="right">
-      <router-view :id="navIndex"></router-view>
+  <div id="category">
+    <header>
+      <div class="left">分类</div>
+      <div class="right"></div>
+    </header>
+    <div class="category-shop">
+      <nav class="left">
+        <ul class="categor-right-ul">
+          <li v-for="(item,index) in naveLeftData" :key="index"
+              :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
+              v-on:click="navClickFn(index)">
+            {{ item.des }}
+          </li>
+        </ul>
+      </nav>
+      <div class="right">
+        <router-view :id="navIndex"></router-view>
+      </div>
     </div>
+    <Bottom></Bottom>
   </div>
-</div>
 </template>
 <script>
+import Bottom from '@/components/Bottom.vue'
 export default {
   name: 'category',
   data () {
@@ -68,7 +70,9 @@ export default {
       }]
     }
   },
-  components: {},
+  components: {
+    Bottom
+  },
   created: function () {
     this.navIndex = this.$route.params.id ? this.$route.params.id : 0
     document.title = '商品分类'
@@ -77,8 +81,9 @@ export default {
     navClickFn: function (index) {
       this.navIndex = index
       this.$route.params.id = index
+      console.info(this.$route.params.id)
       this.$router.push({
-        path: 'category/' + index
+        path: '/category/' + index
       })
     }
   }
@@ -87,9 +92,12 @@ export default {
 <style lang="stylus" scoped>
 #category
   width 100%
+  Header
+    padding-left 8px
   .category-shop
     width 100%
     margin-top 20px
+    padding 0px 8px 8px
     display flex
     nav.left
       width 20%

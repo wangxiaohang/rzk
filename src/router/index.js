@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/index'
 import Category from '@/pages/category'
+import CategoryFromId from '@/components/CategoryFromId'
 import User from '@/pages/user'
 import Cart from '@/pages/cart'
 
@@ -27,7 +28,7 @@ export default new Router({
         {
           path: '/category/:id',
           name: 'CategoryId',
-          component: Category
+          component: CategoryFromId
         }
       ]
     },

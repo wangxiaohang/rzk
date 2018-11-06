@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Main from '@/pages/main'
 import Index from '@/pages/index'
 import Category from '@/pages/category'
 import CategoryFromId from '@/components/CategoryFromId'
@@ -13,34 +14,37 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/index'
+      redirect: '/main/index'
     },
     {
-      path: '/index',
-      name: 'Index',
-      component: Index
-    },
-    {
-      path: '/category',
-      name: 'Category',
-      component: Category,
-      children: [ // 这里就是二级路由
+      path: '/main',
+      name: 'main',
+      component: Main,
+      children: [
         {
-          path: '/category/:id',
-          name: 'CategoryId',
-          component: CategoryFromId
+          path: 'index',
+          component: Index
+        }, {
+          path: 'category',
+          name: 'Category',
+          component: Category,
+          children: [ // 这里就是二级路由
+            {
+              path: 'category/:id',
+              name: 'CategoryId',
+              component: CategoryFromId
+            }
+          ]
+        }, {
+          path: 'cart',
+          name: 'Cart',
+          component: Cart
+        }, {
+          path: 'user',
+          name: 'User',
+          component: User
         }
       ]
-    },
-    {
-      path: '/cart',
-      name: 'Cart',
-      component: Cart
-    },
-    {
-      path: '/user',
-      name: 'User',
-      component: User
     }
   ]
 })

@@ -78,7 +78,7 @@ export default {
       this.navIndex = index
       this.$route.params.id = index
       this.$router.push({
-        path: '/category/' + index
+        path: 'category/' + index
       })
     }
   }

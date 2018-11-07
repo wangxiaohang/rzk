@@ -1,7 +1,7 @@
 <template>
 <div class="hotsite clearfix">
   <div class="item" v-for="(item,id) of hotsites" :key="id">
-    <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
+    <div class="img" :style="{'backgroundImage':'url('+item.img.url+')'}"></div>
     <p>{{ item.title }}</p>
   </div>
 </div>

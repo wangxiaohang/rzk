@@ -51,6 +51,9 @@ import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
+
+import Bmob from 'hydrogen-js-sdk/dist/Bmob-1.6.5.min.js'
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   name: 'index',
   data () {
@@ -62,33 +65,7 @@ export default {
         '/static/img/big_shop2.png',
         '/static/img/big_shop3.png'
       ],
-      hotsites: [
-        {
-          img: '/static/img/icon1.png',
-          title: '电玩娱乐'
-        }, {
-          img: '/static/img/icon2.png',
-          title: '办公用品'
-        }, {
-          img: '/static/img/icon3.png',
-          title: '智能生活'
-        }, {
-          img: '/static/img/icon4.png',
-          title: '居家常用'
-        }, {
-          img: '/static/img/icon5.png',
-          title: '户外活动'
-        }, {
-          img: '/static/img/icon6.png',
-          title: '3C数码'
-        }, {
-          img: '/static/img/icon7.png',
-          title: '儿童玩具'
-        }, {
-          img: '/static/img/icon8.png',
-          title: '更多'
-        }
-      ],
+      hotsites: null,
       playTips: [
         {
           title: '玩法介绍',
@@ -126,6 +103,22 @@ export default {
   },
   created () {
     this.products = productsJson
+    // bmob查询热站信息
+    const query = Bmob.Query('hotsites')
+    query.find().then(res => {
+      console.log('热站')
+      console.log(res)
+      this.hotsites = res
+    })
+    // bmob关联查询
+    const proQquery = Bmob.Query('products')
+    proQquery.include('category', 'products')
+    proQquery.find().then(res => {
+      console.log('产品')
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
   },
   mounted () {
     this.topicSwiper = new Swiper('#topic-swiper', {

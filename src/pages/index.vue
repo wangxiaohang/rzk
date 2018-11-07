@@ -52,6 +52,8 @@ import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
 
+import huwai from '@/json/huwai.json'
+
 import Bmob from 'hydrogen-js-sdk/dist/Bmob-1.6.5.min.js'
 Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
@@ -106,19 +108,28 @@ export default {
     // bmob查询热站信息
     const query = Bmob.Query('hotsites')
     query.find().then(res => {
-      console.log('热站')
-      console.log(res)
       this.hotsites = res
     })
-    // bmob关联查询
-    const proQquery = Bmob.Query('products')
-    proQquery.include('category', 'products')
-    proQquery.find().then(res => {
-      console.log('产品')
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
+    // 添加数据
+    console.log(huwai)
+    const queryArray = []
+    // 构造含有50个对象的数组
+    var items = huwai.result.itemList
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i]
+      var queryObj = Bmob.Query('products')
+      queryObj.set('title', item['name']['shortName'])
+      queryObj.set('price', '￥' + item['price']['actPrice'] + '/天')
+      queryObj.set('id', i)
+      queryObj.set('cateId', 9)
+      queryArray.push(queryObj)
+    }
+    // 传入刚刚构造的数组
+    // Bmob.Query('products').saveAll(queryArray).then(result => {
+    //   console.log(result)
+    // }).catch(err => {
+    //   console.log(err)
+    // })
   },
   mounted () {
     this.topicSwiper = new Swiper('#topic-swiper', {

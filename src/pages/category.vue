@@ -92,15 +92,30 @@ export default {
 <style lang="stylus" scoped>
 #category
   width 100%
+  height 100%
+  overflow hidden
+  position relative
   Header
-    padding-left 8px
+    padding 0 8px
+    position relative
+    .right
+      width 18px
+      height 18px
+      position absolute
+      top 10px
+      right 20px
+      background url('../assets/img/index/search.png') no-repeat center/cover
   .category-shop
     width 100%
-    margin-top 20px
     padding 0px 8px 8px
+    position absolute
+    top 40px
+    bottom 60px
     display flex
     nav.left
       width 20%
+      overflow-x hidden
+      overflow-y scroll
       .category-left-item
         display block
         text-align center
@@ -122,5 +137,10 @@ export default {
         left -5px
     div.right
       width 80%
+      overflow-x hidden
       overflow-y scroll
+    div.right::-webkit-scrollbar
+      display none
+    nav.left::-webkit-scrollbar
+      display none
 </style>

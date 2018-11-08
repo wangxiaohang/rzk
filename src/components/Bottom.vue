@@ -74,7 +74,4 @@ export default {
     color: #2f2f2f;
     font-size: 12px;
   }
-  .roter-link-active{
-    color:red;
-  }
 </style>

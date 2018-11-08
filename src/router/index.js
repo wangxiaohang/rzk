@@ -12,7 +12,7 @@ import List from '@/pages/list'
 
 Vue.use(Router)
 
-export default new Router({
+var router = new Router({
   mode: 'history', // 可以是去掉#号
   routes: [
     {
@@ -62,3 +62,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

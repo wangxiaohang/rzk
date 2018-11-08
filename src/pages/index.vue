@@ -51,11 +51,6 @@ import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
-
-import huwai from '@/json/huwai.json'
-
-import Bmob from 'hydrogen-js-sdk/dist/Bmob-1.6.5.min.js'
-Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   name: 'index',
   data () {
@@ -67,7 +62,41 @@ export default {
         '/static/img/big_shop2.png',
         '/static/img/big_shop3.png'
       ],
-      hotsites: null,
+      hotsites: [
+        {
+          img: '/static/img/icon1.png',
+          title: '电玩娱乐',
+          url: '/category/1'
+        }, {
+          img: '/static/img/icon2.png',
+          title: '办公用品',
+          url: '/category/2'
+        }, {
+          img: '/static/img/icon3.png',
+          title: '智能生活',
+          url: '/category/3'
+        }, {
+          img: '/static/img/icon4.png',
+          title: '居家常用',
+          url: '/category/6'
+        }, {
+          img: '/static/img/icon5.png',
+          title: '户外活动',
+          url: '/category/9'
+        }, {
+          img: '/static/img/icon6.png',
+          title: '3C数码',
+          url: '/category/5'
+        }, {
+          img: '/static/img/icon7.png',
+          title: '儿童玩具',
+          url: '/category/8'
+        }, {
+          img: '/static/img/icon8.png',
+          title: '更多',
+          url: '/category/0'
+        }
+      ],
       playTips: [
         {
           title: '玩法介绍',
@@ -105,31 +134,6 @@ export default {
   },
   created () {
     this.products = productsJson
-    // bmob查询热站信息
-    const query = Bmob.Query('hotsites')
-    query.find().then(res => {
-      this.hotsites = res
-    })
-    // 添加数据
-    console.log(huwai)
-    const queryArray = []
-    // 构造含有50个对象的数组
-    var items = huwai.result.itemList
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i]
-      var queryObj = Bmob.Query('products')
-      queryObj.set('title', item['name']['shortName'])
-      queryObj.set('price', '￥' + item['price']['actPrice'] + '/天')
-      queryObj.set('id', i)
-      queryObj.set('cateId', 9)
-      queryArray.push(queryObj)
-    }
-    // 传入刚刚构造的数组
-    // Bmob.Query('products').saveAll(queryArray).then(result => {
-    //   console.log(result)
-    // }).catch(err => {
-    //   console.log(err)
-    // })
   },
   mounted () {
     this.topicSwiper = new Swiper('#topic-swiper', {

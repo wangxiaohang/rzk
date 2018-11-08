@@ -1,9 +1,9 @@
 <template>
 <div class="hotsite clearfix">
-  <div class="item" v-for="(item,id) of hotsites" :key="id">
-    <div class="img" :style="{'backgroundImage':'url('+item.img.url+')'}"></div>
+  <router-link class="item" v-for="(item,id) of hotsites" :key="id" :to="item.url">
+    <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
     <p>{{ item.title }}</p>
-  </div>
+  </router-link>
 </div>
 </template>
 <script>
@@ -19,6 +19,7 @@ export default {
 .hotsite
   margin-top 5px
   .item
+    display block
     width 25%
     overflow hidden
     float left

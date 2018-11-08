@@ -9,6 +9,12 @@ import 'swiper/dist/css/swiper.min.css'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  console.log(from)
+  console.log(to)
+  next()
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

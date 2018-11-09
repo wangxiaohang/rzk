@@ -18,6 +18,11 @@ export default {
       spanClassName: 'none'
     }
   },
+  watch: {
+    all: function () { // 监听父组件的变化
+      this.spanClassName = this.all
+    }
+  },
   methods: {
     choose: function (id) {
       if (this.spanClassName === 'none') {
@@ -27,7 +32,7 @@ export default {
       }
     }
   },
-  props: ['info', 'id']
+  props: ['info', 'all', 'id']
 }
 </script>
 <style scoped lang="stylus">
@@ -67,7 +72,7 @@ export default {
         color #fff
         position absolute
         left 1px
-        bottom 1px
+        bottom 0
         -webkit-transform  rotate(20deg)
         -moz-transform  rotate(20deg)
     .img

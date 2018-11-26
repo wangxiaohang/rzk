@@ -1,6 +1,6 @@
 <template>
 <div id="hot">
-  <Header :title="'热租商品'" :backpath="'/main/index'"></Header>
+  <Header :title="'热租商品'" :backpath="'/index'"></Header>
 </div>
 </template>
 <script>

@@ -9,6 +9,7 @@ import Cart from '@/pages/cart'
 import Hots from '@/pages/hots'
 import Topics from '@/pages/topics'
 import List from '@/pages/list'
+import login from '@/pages/login'
 
 Vue.use(Router)
 
@@ -54,6 +55,9 @@ var router = new Router({
     }, {
       path: '/list',
       component: List
+    }, {
+      path: '/login',
+      component: login
     }
   ]
 })

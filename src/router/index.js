@@ -10,6 +10,7 @@ import Hots from '@/pages/hots'
 import Topics from '@/pages/topics'
 import List from '@/pages/list'
 import login from '@/pages/login'
+import password from '@/pages/password'
 
 Vue.use(Router)
 
@@ -58,6 +59,9 @@ var router = new Router({
     }, {
       path: '/login',
       component: login
+    }, {
+      path: '/password',
+      component: password
     }
   ]
 })

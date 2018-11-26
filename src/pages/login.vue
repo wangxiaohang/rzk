@@ -1,5 +1,6 @@
 <template>
 <div class="login">
+  <Header :title="'登录/注册'" :backpath="'/index'"></Header>
   <h1 class="login-title">{{title.h1}}</h1>
   <p class="login-des">{{title.p}}<span v-show="title.h1=='登录'" style="color:#fcdd7d" @click="toRegister()">注册 </span></p>
   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
@@ -19,6 +20,8 @@
 </div>
 </template>
 <script>
+import Header from '@/components/Header'
+
 export default {
   data () {
     var validatePhone = (rule, value, callback) => {
@@ -79,6 +82,9 @@ export default {
       }
     }
   },
+  components: {
+    Header
+  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -86,7 +92,7 @@ export default {
           alert('submit!')
           if (this.title.sbt === '下一步') {
             this.$router.push({
-              path: '/index'
+              path: '/password'
             })
           }
         } else {
@@ -123,7 +129,7 @@ export default {
     font-size 24px
     text-align center
     position relative
-    margin-top 30px
+    margin-top 15px
     padding-left 4%
     z-index 10
   .login-title:after

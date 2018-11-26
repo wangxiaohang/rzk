@@ -17,17 +17,24 @@ var router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/main/index'
-    },
-    {
-      path: '/main',
-      name: 'main',
       component: Main,
-      redirect: '/main/index',
+      redirect: '/index',
       children: [
         {
           path: 'index',
           component: Index
+        }, {
+          path: 'category',
+          component: Category,
+          name: 'Category',
+          redirect: '/category/0',
+          children: [ // 这里就是二级路由
+            {
+              path: '/category/:id',
+              name: 'CategoryId',
+              component: CategoryFromId
+            }
+          ]
         }, {
           path: 'cart',
           name: 'Cart',
@@ -36,18 +43,6 @@ var router = new Router({
           path: 'user',
           name: 'User',
           component: User
-        }
-      ]
-    }, {
-      path: '/category',
-      name: 'Category',
-      redirect: '/category/0',
-      component: Category,
-      children: [ // 这里就是二级路由
-        {
-          path: '/category/:id',
-          name: 'CategoryId',
-          component: CategoryFromId
         }
       ]
     }, {

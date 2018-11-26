@@ -18,11 +18,9 @@
         <router-view :id="navIndex"></router-view>
       </div>
     </div>
-    <Bottom></Bottom>
   </div>
 </template>
 <script>
-import Bottom from '@/components/Bottom.vue'
 export default {
   name: 'category',
   data () {
@@ -69,9 +67,6 @@ export default {
         des: '户外活动'
       }]
     }
-  },
-  components: {
-    Bottom
   },
   created: function () {
     this.navIndex = this.$route.params.id ? this.$route.params.id : 0

@@ -23,7 +23,7 @@ export default {
     return {
       IconData: [{
         des: '首页',
-        href: '/main/index',
+        href: '/index',
         urlNone: IconURL0,
         urlActive: IconURL4
       }, {
@@ -33,12 +33,12 @@ export default {
         urlActive: IconURL5
       }, {
         des: '购物车',
-        href: '/main/cart',
+        href: '/cart',
         urlNone: IconURL2,
         urlActive: IconURL6
       }, {
         des: '我的',
-        href: '/main/user',
+        href: '/user',
         urlNone: IconURL3,
         urlActive: IconURL7
       }]

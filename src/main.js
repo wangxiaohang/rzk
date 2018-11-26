@@ -6,7 +6,6 @@ import router from './router'
 import '@/assets/css/reset.css'
 import '@/assets/css/common.styl'
 import 'swiper/dist/css/swiper.min.css'
-
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {

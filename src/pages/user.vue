@@ -2,7 +2,7 @@
 <div id="user">
   <div class="info">
     <i class="pao"></i><i class="pao"></i><i class="pao"></i>
-    <p class="name">半亩花田</p>
+    <p class="name">{{name}}</p>
     <p class="des">唯有热爱，方能抵御岁月漫长</p>
     <div class="avator"></div>
     <span class="toset">&gt;</span>
@@ -22,18 +22,42 @@
     <div class="item server goto">客服中心<i class="goto">&gt;</i></div>
     <div class="item device goto">意见反馈<i class="goto">&gt;</i></div>
     <div class="item setting goto">设置<i class="goto">&gt;</i></div>
+    <div class="item setting goto" @click="backlogin">退出账号<i class="goto">&gt;</i></div>
   </div>
 </div>
 </template>
 <script>
+import Bmob from 'hydrogen-js-sdk'
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   name: 'user',
   data () {
-    return {}
+    return {
+      name: '半亩花田'
+    }
   },
   created: function () {
+    this.getUser()
   },
   methods: {
+    getUser () {
+      if (localStorage && localStorage.getItem('bmob')) {
+        let user = JSON.parse(localStorage.getItem('bmob'))
+        console.info(user.username)
+        this.name = user.username
+      } else {
+        this.$router.push({
+          path: '/login'
+        })
+      }
+    },
+    backlogin () {
+      localStorage.removeItem('bmob')
+      Bmob.User.logout()
+      this.$router.push({
+        path: '/index'
+      })
+    }
   }
 }
 </script>

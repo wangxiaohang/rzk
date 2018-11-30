@@ -117,6 +117,7 @@ export default {
   },
   created: function () {
     document.title = '购物车'
+    this.getUser()
   },
   components: {
     Cartcard
@@ -133,6 +134,16 @@ export default {
     })
   },
   methods: {
+    getUser () {
+      if (localStorage && localStorage.getItem('bmob')) {
+        let user = JSON.parse(localStorage.getItem('bmob'))
+        console.info(user.username)
+      } else {
+        this.$router.push({
+          path: '/login'
+        })
+      }
+    },
     allChoose: function () {
       if (this.allChoseData === 'none') {
         this.allChoseData = 'check'

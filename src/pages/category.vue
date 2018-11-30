@@ -9,76 +9,64 @@
         <ul class="categor-right-ul">
           <li v-for="(item,index) in naveLeftData" :key="index"
               :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
-              v-on:click="navClickFn(index)">
-            {{ item.des }}
+              v-on:click="navClickFn(index,item.title)">
+            {{ item.title }}
           </li>
         </ul>
       </nav>
-      <div class="right">
-        <router-view :id="navIndex"></router-view>
+      <div class="right" v-loading="loading">
+        <router-view :id="navIndex" :category="categoryList"></router-view>
       </div>
     </div>
   </div>
 </template>
 <script>
+import Bmob from 'hydrogen-js-sdk'
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   name: 'category',
   data () {
     return {
       navIndex: 0,
-      naveLeftData: [{
-        id: 0,
-        des: '热租商品'
-      },
-      {
-        id: 1,
-        des: '电娱玩乐'
-      },
-      {
-        id: 2,
-        des: '办公用品'
-      },
-      {
-        id: 3,
-        des: '智能生活'
-      },
-      {
-        id: 4,
-        des: '品牌手机'
-      },
-      {
-        id: 5,
-        des: '3C数码'
-      },
-      {
-        id: 6,
-        des: '居家常用'
-      },
-      {
-        id: 7,
-        des: '生活家电'
-      },
-      {
-        id: 8,
-        des: '儿童玩具'
-      },
-      {
-        id: 9,
-        des: '户外活动'
-      }]
+      limit: 9,
+      category: '热租商品',
+      categoryList: [],
+      naveLeftData: [],
+      loading: true
     }
   },
   created: function () {
+    this.loading = true
     this.navIndex = this.$route.params.id ? this.$route.params.id : 0
     document.title = '商品分类'
+    Bmob.Query('cates').find().then(res => {
+      console.info(res)
+      this.naveLeftData = res
+      this.category = this.naveLeftData[this.navIndex].title
+    })
+    setTimeout(this.getCategoryData, 1000)
   },
   methods: {
-    navClickFn: function (index) {
+    navClickFn: function (index, category) {
+      this.loading = true
       this.navIndex = index
+      this.category = category
       this.$route.params.id = index
       console.info(this.$route.params.id)
       this.$router.push({
         path: '/category/' + index
+      })
+      setTimeout(this.getCategoryData, 1000)
+    },
+    getCategoryData: function () {
+      const query = Bmob.Query('products')
+      query.limit(this.limit)
+      query.skip(0)
+      query.equalTo('category', '==', this.category)
+      query.find().then(res => {
+        console.info(res)
+        this.categoryList = res
+        this.loading = false
       })
     }
   }
@@ -129,7 +117,7 @@ export default {
         background-color orange
         position absolute
         top 10px
-        left -5px
+        left 0px
     div.right
       width 80%
       overflow-x hidden

@@ -8,6 +8,9 @@ import '@/assets/css/common.styl'
 import 'swiper/dist/css/swiper.min.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import Bmob from 'hydrogen-js-sdk'
+
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { size: 'small' })

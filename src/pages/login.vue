@@ -4,15 +4,18 @@
   <h1 class="login-title">{{title.h1}}</h1>
   <p class="login-des">{{title.p}}<span v-show="title.h1=='登录'" style="color:#fcdd7d" @click="toRegister()">注册 </span></p>
   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
-    <el-form-item label="" prop="phone">
-      <el-input type="text" v-model="ruleForm.phone" placeholder="请输入手机号码" ></el-input>
+    <el-form-item label="" prop="name" v-if="isPassValidate">
+      <el-input type="text" v-model="ruleForm.name" maxlength='16'  placeholder="请输入用户名" ></el-input>
+    </el-form-item>
+    <el-form-item label="" prop="phone" v-else>
+      <el-input type="text" v-model="ruleForm.phone" maxlength='11' placeholder="请输入手机号码" ></el-input>
     </el-form-item>
     <el-form-item label="" prop="pass" v-if="isPassValidate">
-      <el-input type="text" v-model="ruleForm.pass" placeholder="请输入密码" ></el-input>
+      <el-input type="password" v-model="ruleForm.pass" maxlength='16' placeholder="请输入密码" ></el-input>
     </el-form-item>
     <el-form-item label="" prop="VerificationCode" v-else>
       <el-input type="text" v-model="ruleForm.VerificationCode" placeholder="请输入验证码" ></el-input>
-      <el-button style="position:absolute;top:0;right:10px" round>点击发送</el-button>
+      <el-button style="position:absolute;top:0;right:10px" round @click="sendCode">点击发送</el-button>
     </el-form-item>
     <el-button round size="medium" @click="submitForm('ruleForm')">{{title.sbt}}</el-button>
   </el-form>
@@ -21,9 +24,18 @@
 </template>
 <script>
 import Header from '@/components/Header'
+import Bmob from 'hydrogen-js-sdk'
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 
 export default {
   data () {
+    var validateName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户名'))
+      } else {
+        callback()
+      }
+    }
     var validatePhone = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入手机号码'))
@@ -65,11 +77,15 @@ export default {
       },
       isPassValidate: true,
       ruleForm: {
+        name: '',
         phone: '',
         pass: '',
         VerificationCode: ''
       },
       rules: {
+        name: [
+          { validator: validateName, trigger: 'blur' }
+        ],
         phone: [
           { validator: validatePhone, trigger: 'blur' }
         ],
@@ -86,14 +102,46 @@ export default {
     Header
   },
   methods: {
+    login () {
+      var self = this
+      Bmob.User.login(self.ruleForm.name, self.ruleForm.pass).then(res => {
+        console.log(res)
+        self.$router.go(-1)
+      }).catch(err => {
+        console.log(err)
+        self.$message.error('用户名或验证码错误')
+      })
+    },
+    loginByPhone () {
+      var self = this
+      Bmob.User.signOrLoginByMobilePhone(self.ruleForm.phone, self.ruleForm.VerificationCode).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    sendCode () {
+      let params = {
+        mobilePhoneNumber: '18755267637'
+      }
+      Bmob.requestSmsCode(params).then(function (response) {
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     submitForm (formName) {
+      var self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
           if (this.title.sbt === '下一步') {
             this.$router.push({
               path: '/password'
             })
+          } else if (this.isPassValidate) {
+            self.login()
+          } else {
+            self.loginByPhone()
           }
         } else {
           console.log('error submit!!')
@@ -108,13 +156,16 @@ export default {
       this.isPassValidate = false
     },
     loginFromValidateCode () {
-      if (this.title.p2 === '使用验证码登录') {
-        this.isPassValidate = false
-        this.title.p2 = '使用密码登录'
-      } else {
-        this.isPassValidate = true
-        this.title.p2 = '使用验证码登录'
-      }
+      /**
+       * //短信验证码resultAPI 用尽
+       * if (this.title.p2 === '使用验证码登录') {
+       *  this.isPassValidate = false
+       *  this.title.p2 = '使用密码登录'
+       * } else {
+       *  this.isPassValidate = true
+       *  this.title.p2 = '使用验证码登录'
+       * }
+       **/
     }
   }
 }

@@ -11,79 +11,60 @@
         </a>
       </li>
     </ul>
-    <div class="procards" v-else-if="id==0">
-      <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
-    </div>
-    <div v-else>
-      {{id}}
-    </div>
+    <ul class="category-right-ul" v-else>
+      <li class="category-right-item" v-for="(item,index) in category" :key="index">
+        <a :href="item.url">
+          <img :src="item.img" alt=""/>
+          <p>{{item.name}}</p>
+        </a>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
 import JsonPhone from '@/json/phone.json'
-import Procard from '@/components/Procard.vue'
+import Bmob from 'hydrogen-js-sdk'
+Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   data () {
     return {
       phoneList: [],
-      bannerURLs: '/static/img/big_shop1.png',
-      hotProsInfo: [
-        {
-          img: '/static/img/shop1.png',
-          title: '智能儿童手表',
-          price: '￥50/天'
-        }, {
-          img: '/static/img/shop2.png',
-          title: '龙卷风榨汁杯',
-          price: '￥20/天'
-        }, {
-          img: '/static/img/shop3.png',
-          title: '智能拉杆行李箱',
-          price: '￥88/天'
-        }, {
-          img: '/static/img/shop4.png',
-          title: '智能儿童手表',
-          price: '￥50/天'
-        }, {
-          img: '/static/img/shop5.png',
-          title: '龙卷风榨汁杯',
-          price: '￥20/天'
-        }, {
-          img: '/static/img/shop6.png',
-          title: '智能拉杆行李箱',
-          price: '￥88/天'
-        }
-      ]
+      categoryList: [],
+      bannerURLs: '/static/img/big_shop1.png'
     }
   },
   mounted () {
     var self = this
-    console.info(self.id)
     self.phoneList = JsonPhone.lists
   },
-  components: {
-    Procard
-  },
-  props: ['id']
+  methods: {},
+  props: ['id', 'category']
 }
 </script>
 <style scoped lang="stylus">
   .category-right-wrap
     width 100%
-    text-align center
     font-size 12px
     .category-banner
-      width 100%
+      width 92%
+      margin-left 20px
       margin-bottom 20px
       img
-        width 240px
-        margin-left 8px
+        width 100%
     li.category-right-item
-      width 33.3%
-      margin-bottom 30px
+      width 80px
+      margin 0 10px 30px
+      text-align center
       display inline-block
       img
-        width 40px
+        width 50px
+      p
+       width 80px
+       height 40px
+       line-height 40px
+       overflow hidden
+       text-overflow ellipsis
+       white-space nowrap
     .procards
       width 100%
       .procard

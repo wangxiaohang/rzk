@@ -15,7 +15,7 @@
         </ul>
       </nav>
       <div class="right" v-loading="loading">
-        <router-view :id="navIndex" :category="categoryList"></router-view>
+        <router-view :id="navIndex" :category="categoryList" :bannerURL="bannerURL"></router-view>
       </div>
     </div>
   </div>
@@ -32,6 +32,8 @@ export default {
       category: '热租商品',
       categoryList: [],
       naveLeftData: [],
+      banner: [],
+      bannerURL: '',
       loading: true
     }
   },
@@ -39,11 +41,8 @@ export default {
     this.loading = true
     this.navIndex = this.$route.params.id ? this.$route.params.id : 0
     document.title = '商品分类'
-    Bmob.Query('cates').find().then(res => {
-      console.info(res)
-      this.naveLeftData = res
-      this.category = this.naveLeftData[this.navIndex].title
-    })
+    this.getCatesData()
+    setTimeout(this.getBannersData, 300)
     setTimeout(this.getCategoryData, 1000)
   },
   methods: {
@@ -52,6 +51,7 @@ export default {
       this.navIndex = index
       this.category = category
       this.$route.params.id = index
+      this.bannerURL = this.banner[this.navIndex].img
       console.info(this.$route.params.id)
       this.$router.push({
         path: '/category/' + index
@@ -67,6 +67,19 @@ export default {
         console.info(res)
         this.categoryList = res
         this.loading = false
+      })
+    },
+    getCatesData: function () {
+      Bmob.Query('cates').find().then(res => {
+        console.info(res)
+        this.naveLeftData = res
+        this.category = this.naveLeftData[this.navIndex].title
+      })
+    },
+    getBannersData: function () {
+      Bmob.Query('banners').find().then(res => {
+        this.banner = res
+        this.bannerURL = res[this.navIndex].img
       })
     }
   }

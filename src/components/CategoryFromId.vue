@@ -1,7 +1,7 @@
 <template>
   <div class="category-right-wrap">
     <div class="category-banner">
-      <img :src="bannerURLs" alt="">
+      <img :src="bannerURL" alt="">
     </div>
     <ul class="category-right-ul" v-if="id==4">
       <li class="category-right-item" v-for="(item,index) in phoneList" :key="index">
@@ -29,8 +29,7 @@ export default {
   data () {
     return {
       phoneList: [],
-      categoryList: [],
-      bannerURLs: '/static/img/big_shop1.png'
+      categoryList: []
     }
   },
   mounted () {
@@ -38,7 +37,7 @@ export default {
     self.phoneList = JsonPhone.lists
   },
   methods: {},
-  props: ['id', 'category']
+  props: ['id', 'category', 'bannerURL']
 }
 </script>
 <style scoped lang="stylus">

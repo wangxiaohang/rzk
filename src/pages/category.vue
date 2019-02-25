@@ -52,26 +52,26 @@ export default {
       this.category = category
       this.$route.params.id = index
       this.bannerURL = this.banner[this.navIndex].img
-      console.info(this.$route.params.id)
       this.$router.push({
         path: '/category/' + index
       })
       setTimeout(this.getCategoryData, 1000)
     },
     getCategoryData: function () {
-      const query = Bmob.Query('products')
-      query.limit(this.limit)
-      query.skip(0)
-      query.equalTo('category', '==', this.category)
-      query.find().then(res => {
-        console.info(res)
-        this.categoryList = res
-        this.loading = false
-      })
+      // const query = Bmob.Query('products')
+      // query.limit(this.limit)
+      // query.skip(0)
+      // query.equalTo('category', '==', this.category)
+      // query.find().then(res => {
+      //   this.categoryList = res
+      //   this.loading = false
+      // })
+      // this.categoryList = ["热租商品","电玩娱乐","办公用品","智能生活","品牌手机","3C数码","居家常用","生活家电","儿童玩具","户外活动"];
+      this.categoryList = ['aaa', 'bbb', 'ccc']
+      this.loading = false
     },
     getCatesData: function () {
       Bmob.Query('cates').find().then(res => {
-        console.info(res)
         this.naveLeftData = res
         this.category = this.naveLeftData[this.navIndex].title
       })

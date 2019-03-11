@@ -51,6 +51,7 @@ import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
+import axios from 'axios'
 export default {
   name: 'index',
   data () {
@@ -62,41 +63,42 @@ export default {
         '/static/img/big_shop2.png',
         '/static/img/big_shop3.png'
       ],
-      hotsites: [
-        {
-          img: '/static/img/icon1.png',
-          title: '电玩娱乐',
-          url: '/category/1'
-        }, {
-          img: '/static/img/icon2.png',
-          title: '办公用品',
-          url: '/category/2'
-        }, {
-          img: '/static/img/icon3.png',
-          title: '智能生活',
-          url: '/category/3'
-        }, {
-          img: '/static/img/icon4.png',
-          title: '居家常用',
-          url: '/category/6'
-        }, {
-          img: '/static/img/icon5.png',
-          title: '户外活动',
-          url: '/category/9'
-        }, {
-          img: '/static/img/icon6.png',
-          title: '3C数码',
-          url: '/category/5'
-        }, {
-          img: '/static/img/icon7.png',
-          title: '儿童玩具',
-          url: '/category/8'
-        }, {
-          img: '/static/img/icon8.png',
-          title: '更多',
-          url: '/category/0'
-        }
-      ],
+      hotsites: null,
+      // hotsites: [
+      //   {
+      //     img: '/static/img/icon1.png',
+      //     title: '电玩娱乐',
+      //     url: '/category/1'
+      //   }, {
+      //     img: '/static/img/icon2.png',
+      //     title: '办公用品',
+      //     url: '/category/2'
+      //   }, {
+      //     img: '/static/img/icon3.png',
+      //     title: '智能生活',
+      //     url: '/category/3'
+      //   }, {
+      //     img: '/static/img/icon4.png',
+      //     title: '居家常用',
+      //     url: '/category/6'
+      //   }, {
+      //     img: '/static/img/icon5.png',
+      //     title: '户外活动',
+      //     url: '/category/9'
+      //   }, {
+      //     img: '/static/img/icon6.png',
+      //     title: '3C数码',
+      //     url: '/category/5'
+      //   }, {
+      //     img: '/static/img/icon7.png',
+      //     title: '儿童玩具',
+      //     url: '/category/8'
+      //   }, {
+      //     img: '/static/img/icon8.png',
+      //     title: '更多',
+      //     url: '/category/0'
+      //   }
+      // ],
       playTips: [
         {
           title: '玩法介绍',
@@ -134,6 +136,17 @@ export default {
   },
   created () {
     this.products = productsJson
+    var that = this
+    // 获取热站数据
+    // axios.get('http://test.umeweb.com:8080/channel/yx/rzk/hotsite.json')
+    axios.get('./static/json/hotsite.json')
+      .then(function (response) {
+        that.hotsites = response['data']['0']['data']['132826']['list']
+        console.log(that.hotsites)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
   },
   mounted () {
     this.topicSwiper = new Swiper('#topic-swiper', {

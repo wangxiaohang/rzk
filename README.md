@@ -2,30 +2,16 @@
 
 > 任租客网站版，各类用品租赁平台
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
 
 # 目录说明
 
-## build
+## build / config
 
-> 配置文件
+> webpack配置文件
+
+## static
+
+> 存放第三方静态资源
 
 ## src
 
@@ -37,7 +23,15 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ### components
 
-> 模块
+> 组件。（就近维护：有图片等，放到文件夹下）
+
+### main.js
+
+> 入口文件
+
+### App.vue
+
+> 整个页面组件
 
 1. banner: 首页轮播图
 2. card: 单个商品卡片（图、标题、价格）,热租商品和推荐商品中引用

@@ -1,8 +1,10 @@
 <template>
   <div class="category-right-wrap">
+    <!--
     <div class="category-banner">
       <img :src="bannerURL" alt="">
     </div>
+    -->
     <ul class="category-right-ul" v-if="id==4">
       <li class="category-right-item" v-for="(item,index) in phoneList" :key="index">
         <a :href="item.link">
@@ -14,8 +16,8 @@
     <ul class="category-right-ul" v-else>
       <li class="category-right-item" v-for="(item,index) in category" :key="index">
         <a :href="item.url">
-          <img :src="item.img" alt=""/>
-          <p>{{item.name}}</p>
+          <img :src="item.image" alt=""/>
+          <p>{{item.title}}</p>
         </a>
       </li>
     </ul>
@@ -23,8 +25,8 @@
 </template>
 <script>
 import JsonPhone from '@/json/phone.json'
-import Bmob from 'hydrogen-js-sdk'
-Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
+// import Bmob from 'hydrogen-js-sdk'
+// Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   data () {
     return {
@@ -37,7 +39,7 @@ export default {
     self.phoneList = JsonPhone.lists
   },
   methods: {},
-  props: ['id', 'category', 'bannerURL']
+  props: ['id', 'category']
 }
 </script>
 <style scoped lang="stylus">
@@ -48,17 +50,18 @@ export default {
       width 92%
       margin-left 20px
       margin-bottom 20px
+      display: none
       img
         width 100%
     li.category-right-item
-      width 80px
-      margin 0 10px 30px
+      width 33.333%
+      margin 10px 0
       text-align center
       display inline-block
       img
-        width 50px
+        width 80%
+        max-width 80px
       p
-       width 80px
        height 40px
        line-height 40px
        overflow hidden

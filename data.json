@@ -1,0 +1,12 @@
+{
+  "products": [{
+    "name": "aa"
+  },{
+    "name": "bb"
+  }],
+  "categories": [{
+    "name": "玩具"
+  },{
+    "name": "电子"
+  }]
+}

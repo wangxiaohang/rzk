@@ -15,14 +15,15 @@
         </ul>
       </nav>
       <div class="right" v-loading="loading">
-        <router-view :id="navIndex" :category="categoryList" :bannerURL="bannerURL"></router-view>
+        <router-view :id="navIndex" :category="categoryList"></router-view>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Bmob from 'hydrogen-js-sdk'
-Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
+// import Bmob from 'hydrogen-js-sdk'
+// Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
+import axios from 'axios'
 export default {
   name: 'category',
   data () {
@@ -33,7 +34,6 @@ export default {
       categoryList: [],
       naveLeftData: [],
       banner: [],
-      bannerURL: '',
       loading: true
     }
   },
@@ -42,7 +42,7 @@ export default {
     this.navIndex = this.$route.params.id ? this.$route.params.id : 0
     document.title = '商品分类'
     this.getCatesData()
-    setTimeout(this.getBannersData, 300)
+    // setTimeout(this.getBannersData, 300)
     setTimeout(this.getCategoryData, 1000)
   },
   methods: {
@@ -51,7 +51,6 @@ export default {
       this.navIndex = index
       this.category = category
       this.$route.params.id = index
-      this.bannerURL = this.banner[this.navIndex].img
       this.$router.push({
         path: '/category/' + index
       })
@@ -66,21 +65,38 @@ export default {
       //   this.categoryList = res
       //   this.loading = false
       // })
-      // this.categoryList = ["热租商品","电玩娱乐","办公用品","智能生活","品牌手机","3C数码","居家常用","生活家电","儿童玩具","户外活动"];
-      this.categoryList = ['aaa', 'bbb', 'ccc']
-      this.loading = false
+      // this.loading = false
+
+      var that = this
+      axios.get('../static/json/cate-' + that.navIndex + '.json')
+        .then(function (res) {
+          // console.log(res['data']['data']['list'])
+          that.categoryList = res['data']['data']['list']
+          that.loading = false
+        }).catch(function (err) {
+          console.log('获取' + that.navIndex + '分类下内容错误')
+          console.log(err)
+        })
     },
     getCatesData: function () {
-      Bmob.Query('cates').find().then(res => {
-        this.naveLeftData = res
-        this.category = this.naveLeftData[this.navIndex].title
-      })
+      // Bmob.Query('cates').find().then(res => {
+      //   this.naveLeftData = res
+      //   this.category = this.naveLeftData[this.navIndex].title
+      // })
+      var that = this
+      axios.get('../static/json/cates.json')
+        .then(function (res) {
+          that.naveLeftData = res['data']['data']['117330']['list']
+        }).catch(function (err) {
+          console.log('获取分类页左侧分类信息错误：')
+          console.log(err)
+        })
     },
     getBannersData: function () {
-      Bmob.Query('banners').find().then(res => {
-        this.banner = res
-        this.bannerURL = res[this.navIndex].img
-      })
+      // Bmob.Query('banners').find().then(res => {
+      //   this.banner = res
+      //   this.bannerURL = res[this.navIndex].img
+      // })
     }
   }
 }
@@ -103,10 +119,10 @@ export default {
       background url('../assets/img/index/search.png') no-repeat center/cover
   .category-shop
     width 100%
-    padding 0px 8px 8px
+    padding 0px
     position absolute
     top 40px
-    bottom 60px
+    bottom 0
     display flex
     nav.left
       width 20%

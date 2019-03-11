@@ -1,3 +1,5 @@
+/* postcss-loader包的配置文件 */
+
 // https://github.com/michael-ciniawsky/postcss-load-config
 
 module.exports = {

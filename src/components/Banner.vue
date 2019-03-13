@@ -2,11 +2,11 @@
 <div class="banner">
   <div class="swiper-container" id="banner-swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(url,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+url+')'}"></div>
+      <div class="swiper-slide" v-for="(urls,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+urls['image_800']+')'}"></div>
     </div>
   </div>
   <div class="banner-indicator">
-    <div v-for="(url,id) of bannerURLs" :key="id" :class="{'indicator':true,'active':activeIndex==id}"></div>
+    <div v-for="{id} of bannerURLs" :key="id" :class="{'indicator':true,'active':activeIndex==id}"></div>
   </div>
 </div>
 </template>
@@ -20,13 +20,10 @@ export default {
       activeIndex: 0
     }
   },
-  computed: {
-  },
-  methods: {
-  },
   props: ['bannerURLs'],
   mounted: function () {
     var that = this
+    console.log('开始初始化banner swiper')
     this.bannerSwiper = new Swiper('#banner-swiper', {
       autoplay: {
         stopOnLastSlide: false,

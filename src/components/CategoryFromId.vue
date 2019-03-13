@@ -5,6 +5,7 @@
       <img :src="bannerURL" alt="">
     </div>
     -->
+    <!--
     <ul class="category-right-ul" v-if="id==4">
       <li class="category-right-item" v-for="(item,index) in phoneList" :key="index">
         <a :href="item.link">
@@ -13,7 +14,8 @@
         </a>
       </li>
     </ul>
-    <ul class="category-right-ul" v-else>
+    <ul class="category-right-ul" v-else> -->
+    <ul class="category-right-ul">
       <li class="category-right-item" v-for="(item,index) in category" :key="index">
         <a :href="item.url">
           <img :src="item.image" alt=""/>
@@ -24,9 +26,6 @@
   </div>
 </template>
 <script>
-import JsonPhone from '@/json/phone.json'
-// import Bmob from 'hydrogen-js-sdk'
-// Bmob.initialize('bd871ea12dc290abce3d439aa8cd12aa', '5c7a9c2c9b82387a615d8a674e1ebc78')
 export default {
   data () {
     return {
@@ -35,8 +34,8 @@ export default {
     }
   },
   mounted () {
-    var self = this
-    self.phoneList = JsonPhone.lists
+    // var self = this
+    // self.phoneList = JsonPhone.lists
   },
   methods: {},
   props: ['id', 'category']

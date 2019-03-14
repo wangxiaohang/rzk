@@ -8,16 +8,16 @@
       <input type="text" />
       <p class="placeholder">搜索你想要的宝贝吧~</p>
   </div>
-  <Banner :bannerURLs="bannerURLs"></Banner>
+  <Banner></Banner>
   <Hotsite :hotsites="hotsites"></Hotsite>
   <div class="plays">
-    <p class="title">全新玩法</p>
+    <p class="title">发现</p>
     <div class="cards">
       <Playcard v-for="(tip,id) of playTips" :key="id" :classname="id===0?'left':'right'" :title="tip.title" :des="tip.des"></Playcard>
     </div>
   </div>
   <div class="hotpros">
-    <p class="title">热租商品<router-link to="/hots">更多 &gt;</router-link></p>
+    <p class="title">流行元素</p>
     <div class="procards three">
       <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
     </div>
@@ -25,14 +25,12 @@
   <div class="topics">
     <p class="title">精选专题<router-link to="/topics">更多 &gt;</router-link></p>
     <div class="cards">
-      <div class="swiper-container" id="topic-swiper">
-        <div class="swiper-wrapper">
-          <div v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
-            <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
-            <p>{{ item.title }}</p>
-          </div>
-        </div>
-      </div>
+      <swiper :options="swiperOption" ref="topicSwiper" class="swiper-container" id="topic-swiper">
+        <swiper-slide v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
+          <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
+          <p>{{ item.title }}</p>
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
   <div class="recommandPros">
@@ -45,30 +43,42 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
 import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
 import axios from 'axios'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'index',
   data () {
     return {
-      topicSwiper: null,
       products: null,
-      bannerURLs: null,
       hotsites: null,
       playTips: [
         {
-          title: '玩法介绍',
-          des: '开启潮租生活新体验'
+          title: '搭配分享',
+          des: '开启潮流生活新体验'
         }, {
-          title: '包月任租',
-          des: '畅享0元租金随租随还'
+          title: '热门精选',
+          des: '解锁时髦精品早春穿搭'
         }
       ],
       hotProsInfo: [
+        {
+          img: '/static/img/shop1.png',
+          title: '智能儿童手表',
+          price: '￥50/天'
+        }, {
+          img: '/static/img/shop2.png',
+          title: '龙卷风榨汁杯',
+          price: '￥20/天'
+        }, {
+          img: '/static/img/shop3.png',
+          title: '智能拉杆行李箱',
+          price: '￥88/天'
+        },
         {
           img: '/static/img/shop1.png',
           title: '智能儿童手表',
@@ -91,7 +101,16 @@ export default {
           img: '/static/img/big_shop2.png',
           title: '精品人气好物推荐，共享精致生活'
         }
-      ]
+      ],
+      swiperOption: {
+        direction: 'horizontal',
+        loop: false,
+        autoplay: false,
+        slidesPerView: 'auto',
+        slidesOffsetBefore: 8,
+        slidesOffsetAfter: 8
+        // spaceBetween: 20
+      }
     }
   },
   created () {
@@ -105,32 +124,19 @@ export default {
       .catch(function (err) {
         console.log(err)
       })
-    // 获取banner数据
-    axios.get('./static/json/banner.json')
-      .then(function (response) {
-        that.bannerURLs = response['data']['data']['122224']['list']
-        // console.log(response['data']['data']['122224']['list'])
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
   },
-  mounted () {
-    this.topicSwiper = new Swiper('#topic-swiper', {
-      direction: 'horizontal',
-      loop: false,
-      autoplay: false,
-      slidesPerView: 'auto',
-      slidesOffsetBefore: 8,
-      slidesOffsetAfter: 8
-      // spaceBetween: 20
-    })
+  computed: {
+    swiper () {
+      return this.$refs.topicSwiper.swiper
+    }
   },
   components: {
     Banner,
     Hotsite,
     Playcard,
-    Procard
+    Procard,
+    swiper,
+    swiperSlide
   }
 }
 </script>

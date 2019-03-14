@@ -1,5 +1,5 @@
 <template>
-<div class="hotsite clearfix">
+<div class="hotsite clearfix" v-if="hotsites">
   <router-link class="item" v-for="(item,id) of hotsites" :key="id" :to="'/category/'+item.sort">
     <div class="img" :style="{'backgroundImage':'url('+item.image+')'}"></div>
     <p>{{ item.title }}</p>

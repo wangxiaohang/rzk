@@ -1,7 +1,7 @@
 <template>
 <div :class="['procard',lines==2?'twe':'three']">
-  <div class="img" :style="{'backgroundImage':'url('+info.img+')'}"></div>
   <p class="tit">{{ info.title }}</p>
+  <div class="img" :style="{'backgroundImage':'url('+info.image+')'}"></div>
   <p class="price">{{ info.price }}</p>
 </div>
 </template>
@@ -13,17 +13,22 @@ export default {
 <style scoped lang="stylus">
 .procard
   text-align center
+  background #F3F3F3
+  border-radius 2px
 
   .img
-    width 100%
+    width 60%
     height 0
-    padding-bottom 100%
+    background-color #F3F3F3
+    padding-bottom 60%
     border-radius 6px
     overflow hidden
+    margin 0 auto 10px
   .tit
-    font-size 12px
+    font-size 14px
     color #000
     line-height 24px
+    padding 12px 0
 
   .price
     color #ff322b

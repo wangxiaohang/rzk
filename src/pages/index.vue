@@ -18,14 +18,20 @@
   </div>
   <div class="hotpros">
     <p class="title">流行元素</p>
-    <div class="procards three">
-      <Procard v-for="(info,id) of hotProsInfo" :key="id" :info="info" :lines="'three'"></Procard>
-    </div>
+    <swiper :options="hotElmsOption" ref="hotElmSwiper" v-if="hotElms" class="hotElmSwiper">
+      <swiper-slide v-for="(group,index) in hotElmsGroup" :key="index">
+        <div class="procards three">
+          <Procard v-for="(el,id) of group" :key="id" :info="el" :lines="'three'"></Procard>
+        </div>
+      </swiper-slide>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
   </div>
   <div class="topics">
-    <p class="title">精选专题<router-link to="/topics">更多 &gt;</router-link></p>
+    <p class="title">精选专题</p>
     <div class="cards">
-      <swiper :options="swiperOption" ref="topicSwiper" class="swiper-container" id="topic-swiper">
+      <swiper :options="topicSwiperOption" ref="topicSwiper" class="swiper-container" id="topic-swiper">
         <swiper-slide v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
           <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
           <p>{{ item.title }}</p>
@@ -58,13 +64,14 @@ export default {
       hotsites: null,
       playTips: [
         {
-          title: '搭配分享',
-          des: '开启潮流生活新体验'
+          title: '春季潮流报告',
+          des: '解锁6大流行趋势'
         }, {
-          title: '热门精选',
-          des: '解锁时髦精品早春穿搭'
+          title: '千万抽奖',
+          des: '爆款主播狂秒'
         }
       ],
+      hotElms: null,
       hotProsInfo: [
         {
           img: '/static/img/shop1.png',
@@ -100,16 +107,33 @@ export default {
         }, {
           img: '/static/img/big_shop2.png',
           title: '精品人气好物推荐，共享精致生活'
+        },
+        {
+          img: '/static/img/big_shop1.png',
+          title: '秋品换新节，鞋包配饰全场享直价'
+        }, {
+          img: '/static/img/big_shop2.png',
+          title: '精品人气好物推荐，共享精致生活'
         }
       ],
-      swiperOption: {
+      topicSwiperOption: {
         direction: 'horizontal',
         loop: false,
         autoplay: false,
         slidesPerView: 'auto',
-        slidesOffsetBefore: 8,
-        slidesOffsetAfter: 8
+        spaceBetween: 20
+        // slidesOffsetBefore: 8,
+        // slidesOffsetAfter: 8
         // spaceBetween: 20
+      },
+      hotElmsOption: {
+        direction: 'horizontal',
+        loop: false,
+        autoplay: false,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
       }
     }
   },
@@ -124,11 +148,32 @@ export default {
       .catch(function (err) {
         console.log(err)
       })
+    // 获取流行元素
+    axios.get('./static/json/topic.json')
+      .then(function (response) {
+        that.hotElms = response['data']['data']['123003']['list']
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
   },
   computed: {
     swiper () {
       return this.$refs.topicSwiper.swiper
+    },
+    hotElmsGroup () {
+      // 流行元素3个分组
+      var tempArr = []
+      if (!Array.isArray(this.hotElms)) return tempArr
+      for (var i = 0; i < this.hotElms.length; i++) {
+        var k = parseInt(i / 3)
+        if (!Array.isArray(tempArr[k])) tempArr[k] = []
+        tempArr[k].push(this.hotElms[i])
+      }
+      console.log(tempArr)
+      return tempArr
     }
+
   },
   components: {
     Banner,
@@ -216,6 +261,6 @@ translate(x,y,z)
         position absolute
         bottom 0
         color #000
-    .swiper-slide:first-child
-      margin-right 20px
+    // .swiper-slide:first-child
+    //   margin-right 20px
 </style>

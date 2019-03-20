@@ -32,18 +32,16 @@
     <p class="title">精选专题</p>
     <div class="cards">
       <swiper :options="topicSwiperOption" ref="topicSwiper" class="swiper-container" id="topic-swiper">
-        <swiper-slide v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
-          <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
+        <swiper-slide v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide img" :style="{'backgroundImage':'url('+item['backgroundImage']+')'}">
+          <div class="img" :style="{'backgroundImage':'url('+item.image+')'}"></div>
           <p>{{ item.title }}</p>
         </swiper-slide>
       </swiper>
     </div>
   </div>
   <div class="recommandPros">
-    <p class="title">精选商品<router-link to="/list">更多 &gt;</router-link></p>
-    <div class="pros">
-      <Procard v-for="(info,id) of products" :key="id" :info="info" :lines="'2'"></Procard>
-    </div>
+    <p class="title">猜你喜欢</p>
+    <prods-list :pros="products"></prods-list>
   </div>
 </div>
 </template>
@@ -53,6 +51,7 @@ import Banner from '@/components/Banner.vue'
 import Hotsite from '@/components/Hotsite.vue'
 import Playcard from '@/components/Playcard.vue'
 import Procard from '@/components/Procard.vue'
+import ProdsList from '@/components/ProdsList.vue'
 import axios from 'axios'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -62,6 +61,8 @@ export default {
     return {
       products: null,
       hotsites: null,
+      hotElms: null,
+      recommandTopics: null,
       playTips: [
         {
           title: '春季潮流报告',
@@ -71,65 +72,11 @@ export default {
           des: '爆款主播狂秒'
         }
       ],
-      hotElms: null,
-      hotProsInfo: [
-        {
-          img: '/static/img/shop1.png',
-          title: '智能儿童手表',
-          price: '￥50/天'
-        }, {
-          img: '/static/img/shop2.png',
-          title: '龙卷风榨汁杯',
-          price: '￥20/天'
-        }, {
-          img: '/static/img/shop3.png',
-          title: '智能拉杆行李箱',
-          price: '￥88/天'
-        },
-        {
-          img: '/static/img/shop1.png',
-          title: '智能儿童手表',
-          price: '￥50/天'
-        }, {
-          img: '/static/img/shop2.png',
-          title: '龙卷风榨汁杯',
-          price: '￥20/天'
-        }, {
-          img: '/static/img/shop3.png',
-          title: '智能拉杆行李箱',
-          price: '￥88/天'
-        }
-      ],
-      recommandTopics: [
-        {
-          img: '/static/img/big_shop1.png',
-          title: '秋品换新节，鞋包配饰全场享直价'
-        }, {
-          img: '/static/img/big_shop2.png',
-          title: '精品人气好物推荐，共享精致生活'
-        },
-        {
-          img: '/static/img/big_shop1.png',
-          title: '秋品换新节，鞋包配饰全场享直价'
-        }, {
-          img: '/static/img/big_shop2.png',
-          title: '精品人气好物推荐，共享精致生活'
-        }
-      ],
       topicSwiperOption: {
-        direction: 'horizontal',
-        loop: false,
-        autoplay: false,
         slidesPerView: 'auto',
         spaceBetween: 20
-        // slidesOffsetBefore: 8,
-        // slidesOffsetAfter: 8
-        // spaceBetween: 20
       },
       hotElmsOption: {
-        direction: 'horizontal',
-        loop: false,
-        autoplay: false,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
@@ -144,19 +91,24 @@ export default {
     axios.get('./static/json/hotsite.json')
       .then(function (response) {
         that.hotsites = response['data']['0']['data']['132826']['list']
-        var hotsite = document.queryAllSelector('.hotsite .item')
-        console.log(hotsite)
-        for (var i = 0; i < hotsite.length; i++) {
-          hotsite[i].style.borderBottom = '5px solid black'
-        }
       })
       .catch(function (err) {
         console.log(err)
       })
-    // 获取流行元素
+    // 获取流行元素、精选专题
     axios.get('./static/json/topic.json')
       .then(function (response) {
         that.hotElms = response['data']['data']['123003']['list']
+        that.recommandTopics = response['data']['data']['122995']['list']
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    // 获取猜你喜欢
+    axios.get('./static/json/youMayLike-0.json')
+      .then(function (response) {
+        that.products = response['data']['data']['wall']['docs']
+        console.log(response['data']['data']['wall']['docs'])
       })
       .catch(function (err) {
         console.log(err)
@@ -185,6 +137,7 @@ export default {
     Hotsite,
     Playcard,
     Procard,
+    ProdsList,
     swiper,
     swiperSlide
   }
@@ -244,9 +197,6 @@ translate(x,y,z)
   height 160px
   position relative
   .cards
-    position absolute
-    left -8px
-    right -8px
     height 130px
   .swiper-container
     height 130px
@@ -254,18 +204,25 @@ translate(x,y,z)
       width 70%
       overflow hidden
       position relative
+      border-radius common-border-radius
       .img
-        width: 100%
+        width 80%
+        height 100%
         position absolute
         top 0
-        bottom 30px
-        border-radius common-border-radius
+        left 10%
       p
-        line-height 30px
-        font-size 12px
+        line-height 130px
+        font-size 20px
+        letter-spacing 4px
         position absolute
-        bottom 0
-        color #000
+        top 0
+        left 0
+        height 130px
+        width 100%
+        color #fff
+        background-color rgba(0,0,0,.4)
+        text-align center
     // .swiper-slide:first-child
     //   margin-right 20px
 </style>

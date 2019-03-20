@@ -144,6 +144,11 @@ export default {
     axios.get('./static/json/hotsite.json')
       .then(function (response) {
         that.hotsites = response['data']['0']['data']['132826']['list']
+        var hotsite = document.queryAllSelector('.hotsite .item')
+        console.log(hotsite)
+        for (var i = 0; i < hotsite.length; i++) {
+          hotsite[i].style.borderBottom = '5px solid black'
+        }
       })
       .catch(function (err) {
         console.log(err)

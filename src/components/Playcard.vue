@@ -20,8 +20,6 @@ common-border-radius = 6px
   height 100px
   padding 10px
   overflow hidden
-  box-shadow 0px 0px 6px #aaa
-  border: 1px solid #ccc
 
   .title
     font-size 16px

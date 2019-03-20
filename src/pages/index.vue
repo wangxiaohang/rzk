@@ -108,7 +108,7 @@ export default {
     axios.get('./static/json/youMayLike-0.json')
       .then(function (response) {
         that.products = response['data']['data']['wall']['docs']
-        console.log(response['data']['data']['wall']['docs'])
+        // console.log(response['data']['data']['wall']['docs'])
       })
       .catch(function (err) {
         console.log(err)
@@ -127,7 +127,7 @@ export default {
         if (!Array.isArray(tempArr[k])) tempArr[k] = []
         tempArr[k].push(this.hotElms[i])
       }
-      console.log(tempArr)
+      // console.log(tempArr)
       return tempArr
     }
 

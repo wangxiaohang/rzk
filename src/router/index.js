@@ -11,6 +11,7 @@ import Topics from '@/pages/topics'
 import List from '@/pages/list'
 import login from '@/pages/login'
 import password from '@/pages/password'
+import bannerDetail from '@/pages/banner-detail'
 
 Vue.use(Router)
 
@@ -62,6 +63,9 @@ var router = new Router({
     }, {
       path: '/password',
       component: password
+    }, {
+      path: '/bandetail',
+      component: bannerDetail
     }
   ]
 })

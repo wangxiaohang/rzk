@@ -1,7 +1,9 @@
 <template>
 <div class="banner">
   <swiper id="banner-swiper" :options="swiperOption" ref="bannerSwiper" v-if="bannerURLs">
-      <swiper-slide class="swiper-slide" v-for="(urls,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+urls['image_800']+')'}"></swiper-slide>
+      <swiper-slide class="swiper-slide" v-for="(urls,id) of bannerURLs" :key="id" :id="id" :style="{'backgroundImage':'url('+urls['image_800']+')'}">
+        <router-link :to="'/bandetail'" class="bdlink"></router-link>
+      </swiper-slide>
   </swiper>
   <div class="swiper-pagination" slot="pagination"></div>
 </div>
@@ -92,6 +94,11 @@ export default {
 .swiper-pagination-bullet-active{
   width: 8px;
   background: #ffdc00;
+}
+.swiper-slide .bdlink {
+  width: 100%;
+  height: 100%;
+  display: block
 }
 </style>
 // 使用没有scoped的stylus，样式失效

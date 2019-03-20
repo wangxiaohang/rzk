@@ -2,7 +2,10 @@
   <div id="category">
     <header>
       <div class="left">分类</div>
-      <div class="right"></div>
+      <transition name="fade">
+        <div class="box" v-if="show"></div>
+      </transition>
+      <div class="right" @click="show = !show"></div>
     </header>
     <div class="category-shop">
       <nav class="left">
@@ -28,6 +31,7 @@ export default {
   name: 'category',
   data () {
     return {
+      show: false,
       navIndex: 0,
       limit: 9,
       category: '热租商品',
@@ -102,6 +106,21 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.fade-enter-active
+  animation bounce-in .5s
+.fade-leave-active
+  animation bounce-in .5s reverse
+@keyframes bounce-in{
+  0% {transform: scale(0)}
+  50% {transform: scale(1.5)}
+  100% {transform: scale(1)}
+}
+header .box
+  width 120px
+  height 20px
+  background lightgreen
+  float right
+  margin 10px 40px
 #category
   width 100%
   height 100%

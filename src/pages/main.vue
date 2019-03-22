@@ -1,25 +1,21 @@
 <template>
 <div class="main">
   <div class="content">
-    <router-view></router-view>
+    <transition name='content-fade' mode='out-in'>
+      <router-view></router-view>
+    </transition>
   </div>
   <Bottom></Bottom>
 </div>
 </template>
 <style lang="stylus" scoped>
-.main
-  width 100%
-  height 100%
-  overflow hidden
-  position relative
-
 .content
-  padding 0px 8px 8px
-  width 100%
-  position absolute
-  top 0
-  bottom 60px
-  overflow auto
+  padding 0px 8px 60px
+  position relative
+.content-fade-enter-active, .content-fade-leave-active
+  transition opacity .1s ease
+.content-fade-enter, .content-fade-leave-to
+  opacity 0
 </style>
 <script>
 import Bottom from '@/components/Bottom.vue'

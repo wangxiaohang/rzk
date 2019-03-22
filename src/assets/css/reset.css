@@ -33,13 +33,6 @@ input[type="text"],input[type="search"],input[type="tel"],input[type="password"]
     /*清除移动端默认的阴影效果*/
     -webkit-appearance:none;/*设置表单元素不自带浏览器默认样式*/
 }
-html,body {
-  width: 100%;
-  height: 100%;
-  overflow:hidden;
-  margin: 0;
-  padding: 0;
-}
 /* 覆盖swiper样式 */
 .hotElmSwiper .swiper-button-prev,
 .hotElmSwiper .swiper-button-next {

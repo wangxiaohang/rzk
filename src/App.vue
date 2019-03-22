@@ -1,14 +1,13 @@
 <template>
   <div class="app">
-    <router-view></router-view>
+    <transition name='app-fade' mode='out-in'>
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
-<script>
-export default {
-}
-</script>
-<style lang="stylus" scoped>
-  .app
-    width 100%
-    height 100%
+<style lang='stylus'>
+  .app-fade-enter-active, .app-fade-leave-active
+    transition opacity .2s ease
+  .app-fade-enter, .app-fade-leave-active
+    opacity 0
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom">
+  <div class="bottom" id='app-bottom'>
     <router-link class="item" v-for="(item,index) in IconData" :key="index" :to="item.href">
       <img :src="item.urlNone" class="none" />
       <img :src="item.urlActive" class="active" />
@@ -56,6 +56,9 @@ export default {
     bottom: 0;
     z-index: 99;
     background-color: #fff;
+    -webkit-appearance: none;
+    box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
   }
 
   #app-bottom div.icon {

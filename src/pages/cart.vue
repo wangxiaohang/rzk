@@ -117,7 +117,7 @@ export default {
   },
   created: function () {
     document.title = '购物车'
-    this.getUser()
+    // this.getUser()
   },
   components: {
     Cartcard

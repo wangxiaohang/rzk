@@ -75,7 +75,7 @@
         },
         {
           "h5Link": "//m.mogujie.com/wall/s?q=美妆/个护",
-          "image": "https://s10.mogucdn.com/mlcdn/c45406/190308_1kjj330ab0g1135f1cdal340bf4di_135x135.png_640x640.v1cAC.40.webp",
+          "image": "./static/img/banner-img-meizhuang.png",
           "titleColor": "#666666",
           "link": "mgj://freemarket/magic?title=美妆/个护&acm=3.mce.1_10_1l1a8.132826.0.a1h6zrko6VtF6.pos_10-m_490692-sd_119",
           "acm": "3.mce.1_10_1l1a8.132826.0.a1h6zrko6VtF6.pos_10-m_490692-sd_119",
@@ -90,7 +90,7 @@
           "link": "mgj://freemarket/magic?title=美妆/个护&acm=3.mce.1_10_1l1a8.132826.0.a1h6zrko6VtF6.pos_10-m_490692-sd_119",
           "acm": "3.mce.1_10_1l1a8.132826.0.a1h6zrko6VtF6.pos_10-m_490692-sd_119",
           "sort": 11,
-          "title": "个户",
+          "title": "个护",
           "shouqLink": ""
         },
         {

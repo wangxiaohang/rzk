@@ -72,4 +72,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 13. address.vue 地址管理
 14. login.vue 登录注册
 
- >this is test
+ >branch rzk-j

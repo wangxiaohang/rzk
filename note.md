@@ -8,3 +8,7 @@ mounted ~ beforeUpdate
 beforeUpdate ~ Updated：data发生变化，会被依次调用
 
 
+qa ???
+> banner-detail往期回顾3d滚动轮播图，ios上手动滑动出现空白
+> 页面快速滑动出现空白
+

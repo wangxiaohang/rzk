@@ -14,8 +14,24 @@
   <div class="blank"></div>
   <div class="theme" v-for="(it,id) in items" :key="id" ref="themes">
     <ul class="imgs">
-      <li v-for="(img,index) in it.detail" :key="index"><img :src="img"/></li>
+      <li v-for="(img,index) in it.detail" :key="index">
+        <img :src="img"/>
+        <div class="video" v-if="it.video && it.video.did == index">
+          <video x-webkit-airplay='true' webkit-playsinline='true' playsinline='true' :src='it.video.src' controls='controls' preload='none' :poster='it.video.poster'>
+          </video>
+        </div>
+      </li>
     </ul>
+  </div>
+  <div class="review">
+    <img :src="review.title" />
+    <div class="content" v-if="review.content.list">
+      <swiper :options="reviewOption" ref="reviewSwiper" class="reviewSwiper">
+        <swiper-slide v-for="(item,id) in review.content.list" :key="id" @click.native='jump'>
+          <img :src='item.image' :data-id='id' :data-link='item.link' />
+        </swiper-slide>
+      </swiper>
+    </div>
   </div>
 </div>
 </template>
@@ -24,6 +40,7 @@
  * 原地址：https://act.mogujie.com/fashionu?acm=3.mce.1_10_1ldjs.122224.0.kEE7Crlf4QDap.pos_1-m_498640-sd_119-mf_4537_1115684-idx_1-mfs_6-dm1_5000&ptp=m1._mf1_1239_4537.banner_122224.2.WX28CCI2
  */
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -40,7 +57,12 @@ export default {
             './static/img/banner-detail-item0-2.png',
             './static/img/banner-detail-item0-3.png',
             './static/img/banner-detail-item0-4.png'
-          ]
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786675371573/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_0le1hb639ce5707bbdj2l1f652l7d_640x320.jpg'
+          }
         }, {
           'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190318_310i7kd01fbea8c0hg2h9i91e647d_150x150.png',
           'price': '￥79.0',
@@ -50,7 +72,12 @@ export default {
             'https://s10.mogucdn.com/mlcdn/c45406/190318_183gdelki60fb2lk2g971646h1ea8_750x500.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_16jcb6bhli85k3c43925b1838ieif_750x500.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_4f11e4l8k187ikhicbi0ii266kajj_750x311.jpg'
-          ]
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786672379272/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_1h3bb58d62dbce16fc7lghjd5ffd1_640x320.jpg'
+          }
         }, {
           'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190318_04bc557gjlhjd3648e3ge6dh2c3e5_150x150.png',
           'price': '￥119.0',
@@ -60,7 +87,12 @@ export default {
             'https://s10.mogucdn.com/mlcdn/c45406/190318_6l9ddijcdd5b03lh17bakkj66cj37_750x500.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_7d1kgb422djkj72ibdg33bagh347k_750x500.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_3c650f4ie0ef4bfbhdi3dg2g434l3_750x311.jpg'
-          ]
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786672276437/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_0hfjfahj178jcggl2hd3hjfklj0fc_640x320.jpg'
+          }
         }, {
           'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190318_54f614g4kl7904d0ll02l05a1aa7k_150x150.png',
           'price': '￥86.0',
@@ -68,7 +100,12 @@ export default {
             'https://s10.mogucdn.com/mlcdn/c45406/190318_8eg8cbl11k250klk8881606f6jaic_750x405.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_0d15aheic32g2kbddk6f7lebhl2c8_750x320.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_5g8c8j8c183jbdjhfc1el3gkg630h_750x500.jpg'
-          ]
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786675434621/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_1g4b8die929akjc63lf67bcgl512j_640x320.jpg'
+          }
         }, {
           'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190318_58ad88bedb3114cbjcj6aj02e6l9l_150x150.png',
           'price': '￥55.0',
@@ -76,7 +113,12 @@ export default {
             'https://s10.mogucdn.com/mlcdn/c45406/190318_617hib3de1ga33bafaichlf936l00_750x380.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_6gjah9bc3fg3fk6d910kj1445lc7a_750x320.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_6f1bf4gff53137i2d62kec75a74aa_750x500.jpg'
-          ]
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786672399759/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_5ebf4b439lk9l63f3gileig3daegb_640x320.jpg'
+          }
         }, {
           'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190318_62e9eldfe6584e6lfkjkeecfhlc2b_150x150.png',
           'price': '￥65.0',
@@ -84,10 +126,16 @@ export default {
             'https://s10.mogucdn.com/mlcdn/c45406/190318_767ba8553djga606ihg3c368adg5f_750x415.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_7ifj8a9kcdbdh592eab67g8g1i233_750x320.jpg',
             'https://s10.mogucdn.com/mlcdn/c45406/190318_8b8l7i8khbgk6kegkjkkaakaibfll_750x594.jpg'
-          ]
-        }, {
-          'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190225_1g4jf881hbcallj8edj9826gk34a8_150x150.png'
+          ],
+          'video': {
+            'did': 1,
+            'src': 'https://1251964405.vod2.myqcloud.com/vodtransgzp1251964405/5285890786672183438/v.f30.mp4',
+            'poster': 'https://s10.mogucdn.com/mlcdn/c45406/190318_04f9d631bc4bb9b344238j7b403e8_640x320.jpg'
+          }
         }
+        // {
+        //   'icon': 'https://s10.mogucdn.com/mlcdn/c45406/190225_1g4jf881hbcallj8edj9826gk34a8_150x150.png'
+        // }
       ],
       nextTheme: 'https://s10.mogucdn.com/mlcdn/c45406/190318_8a07l48099ae1f1a7226ckk9bie5i_750x365.jpg',
       huaxu: {
@@ -98,17 +146,32 @@ export default {
         title: 'https://s10.mogucdn.com/mlcdn/c45406/190318_7b6ff8gdhkebj2ce2e35g4di4cjja_750x180.jpg',
         content: {
           bg: 'https://s10.mogucdn.com/mlcdn/c45406/190121_4hdcbkhe03c2hja65c9183j0c3el0_750x224.jpg',
-          list: [
-            'https://s2.mogucdn.com/mlcdn/c45406/190121_5chcjh06g2i9l55k5gga1lk8290ag_421x226.png',
-            'https://s2.mogucdn.com/mlcdn/c45406/190121_1fcf4hdf204dhf586ki8j8g3fe296_421x226.png',
-            'https://s2.mogucdn.com/mlcdn/c45406/190128_4bc24k59d3cl7f0d8f8k36k77ll91_421x226.png',
-            'https://s11.mogucdn.com/mlcdn/c45406/190121_192hglikbde8f9kcljc683f5jc471_421x226.png',
-            'https://s17.mogucdn.com/mlcdn/c45406/190314_4430cifk01afd409be6je86hfb3ed_421x226.png'
-          ]
+          list: null
         }
       },
       navOption: {
         slidesPerView: 'auto'
+      },
+      reviewOption: {
+        effect: 'coverflow',
+        grabCursor: true,
+        autoplay: {
+          disableOnInteraction: false
+        },
+        speed: 800,
+        loop: true,
+        // ??? ios手动滑动图片空白闪烁
+        loopAdditionalSlides: 1, // 去除左右空白，但手动滑动时左右出现短暂性空白，自动轮播正常
+        centeredSlides: true,
+        slidesPerView: '1.6',
+        initialSlide: 1,
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 15,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true
+        }
       },
       stickyFix: false,
       winWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0
@@ -137,6 +200,9 @@ export default {
     navSwiper () {
       return this.$refs.navSwiper.swiper
     },
+    reviewSwiper () {
+      return this.$refs.reviewSwiper.swiper
+    },
     navCenterMin () {
       return Math.floor(this.winWidth / 72 / 2)
     },
@@ -147,6 +213,17 @@ export default {
   components: {
     swiper,
     swiperSlide
+  },
+  created () {
+    // 获取往期回顾列表
+    var that = this
+    axios.get('./static/json/banner-review.json')
+      .then(function (response) {
+        that.review.content.list = response['data']['data']['133851']['list']
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
   },
   mounted () {
     this.bbox = this.$refs.bannerBox
@@ -173,6 +250,15 @@ export default {
           }
         }
       })
+    },
+    jump (e) {
+      let clickedId = e.target.getAttribute('data-id')
+      if (this.reviewSwiper.realIndex !== clickedId - 0) {
+        this.reviewSwiper.slideTo(clickedId - 0 + 2, 300)
+      } else {
+        let link = e.target.getAttribute('data-link')
+        window.location.href = link
+      }
     }
   }
 }
@@ -183,12 +269,26 @@ export default {
   height 100%
   position relative
   overflow auto
+  .review .content
+    padding 10px 0
   .bgImg
     padding-bottom 49.73%
     background-size cover
   img
     width 100%
     vertical-align middle
+  .theme li
+    position relative
+    .video
+      position absolute
+      width 90%
+      height 100%
+      top 0
+      left 5%
+      text-align center
+      video
+        height 100%
+        border-radius 5px
   .sticky
     width 100%
     position absolute
@@ -216,6 +316,7 @@ export default {
   .sticky.fixed
     position fixed
     top 0px
+    z-index 999
   .blank
     padding-top 9.86666%
     height 72px

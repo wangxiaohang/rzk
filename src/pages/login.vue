@@ -1,6 +1,6 @@
 <template>
 <div class="login">
-  <Header :title="'登录/注册'" :backpath="'/index'"></Header>
+  <Header :title="'登录'" :backpath="'/index'"></Header>
   <h1 class="login-title">{{title.h1}}</h1>
   <p class="login-des">{{title.p}}<span v-show="title.h1=='登录'" style="color:#fcdd7d" @click="toRegister()">注册 </span></p>
   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
@@ -17,6 +17,9 @@
       <el-input type="text" v-model="ruleForm.VerificationCode" placeholder="请输入验证码" ></el-input>
       <el-button style="position:absolute;top:0;right:10px" round @click="sendCode">点击发送</el-button>
     </el-form-item>
+    <p v-show="isPassValidate" style="width:100%;text-align: right; margin-top:20px;">
+      <span style="color:#dcdcdc" @click="forgetPass">忘记密码去设置》 </span>
+    </p>
     <el-button round size="medium" @click="submitForm('ruleForm')">{{title.sbt}}</el-button>
   </el-form>
   <p v-show="title.h1=='登录'" style="width:100%;text-align: center"><span style="color:#dcdcdc" @click="loginFromValidateCode">{{title.p2}} </span></p>
@@ -106,7 +109,9 @@ export default {
       var self = this
       Bmob.User.login(self.ruleForm.name, self.ruleForm.pass).then(res => {
         console.log(res)
-        self.$router.go(-1)
+        this.$router.push({
+          path: '/index'
+        })
       }).catch(err => {
         console.log(err)
         self.$message.error('用户名或验证码错误')
@@ -134,11 +139,7 @@ export default {
       var self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (this.title.sbt === '下一步') {
-            this.$router.push({
-              path: '/password'
-            })
-          } else if (this.isPassValidate) {
+          if (this.isPassValidate) {
             self.login()
           } else {
             self.loginByPhone()
@@ -149,11 +150,15 @@ export default {
         }
       })
     },
+    forgetPass () {
+      this.$router.push({
+        path: '/password'
+      })
+    },
     toRegister () {
-      this.title.h1 = '注册'
-      this.title.p = '欢迎注册账号'
-      this.title.sbt = '下一步'
-      this.isPassValidate = false
+      this.$router.push({
+        path: '/register'
+      })
     },
     loginFromValidateCode () {
       /**

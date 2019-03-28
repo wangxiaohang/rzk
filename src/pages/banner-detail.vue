@@ -4,7 +4,7 @@
   <div :class="{'sticky':true,'fixed':stickyFix}">
     <img :src="qg" />
     <swiper :options="navOption" ref="navSwiper" class="navSwiepr">
-      <swiper-slide v-for="(it,id) in items" :key="id" :class="{'active':id == activePart}" :style="{'backgroundImage':'url('+it.icon+')'}">
+      <swiper-slide v-for="(it,id) in items" :key="id" :data-id='id' :class="{'active':id == activePart}" :style="{'backgroundImage':'url('+it.icon+')'}" @click.native='scrollTo'>
         <transition name='nav-ani'>
           <div class="active-price" v-if='id == activePart'>{{ it.price }}</div>
         </transition>
@@ -172,6 +172,11 @@ export default {
           modifier: 1,
           slideShadows: true
         }
+        // on: {
+        //   touchEnd () {
+        //     this.slideTo(this.realIndex - 0 + 2)
+        //   }
+        // }
       },
       stickyFix: false,
       winWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0
@@ -184,17 +189,24 @@ export default {
     stickyHeight () {
       return this.winWidth * 0.0986666 - 0 + 72
     },
-    partsTop () {
-      let themesHeight = this.themes.map((theme, id) => {
+    themesTop () {
+      return this.themes.map(function (v, i) {
+        return v.offsetTop
+      })
+    },
+    themesHeight () {
+      return this.themes.map((theme, id) => {
         return theme.offsetHeight
       })
+    },
+    activeNavPartsTop () {
       return [
-        this.stickyTop + this.stickyHeight - themesHeight[0] / 2,
-        this.stickyTop + this.stickyHeight + themesHeight[0] - themesHeight[1] / 2,
-        this.stickyTop + this.stickyHeight + themesHeight[0] + themesHeight[1] - themesHeight[2] / 2,
-        this.stickyTop + this.stickyHeight + themesHeight[0] + themesHeight[1] + themesHeight[2] - themesHeight[3] / 2,
-        this.stickyTop + this.stickyHeight + themesHeight[0] + themesHeight[1] + themesHeight[2] + themesHeight[3] - themesHeight[4] / 2,
-        this.stickyTop + this.stickyHeight + themesHeight[0] + themesHeight[1] + themesHeight[2] + themesHeight[3] + themesHeight[4] - themesHeight[5] / 2
+        this.themesTop[0] - this.themesHeight[0] / 2,
+        this.themesTop[1] - this.themesHeight[1] / 2,
+        this.themesTop[2] - this.themesHeight[2] / 2,
+        this.themesTop[3] - this.themesHeight[3] / 2,
+        this.themesTop[4] - this.themesHeight[4] / 2,
+        this.themesTop[5] - this.themesHeight[5] / 2
       ]
     },
     navSwiper () {
@@ -207,7 +219,7 @@ export default {
       return Math.floor(this.winWidth / 72 / 2)
     },
     navCenterMax () {
-      return this.partsTop.length - this.navCenterMin
+      return this.activeNavPartsTop.length - this.navCenterMin
     }
   },
   components: {
@@ -237,8 +249,8 @@ export default {
     scrollHander () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.stickyFix = scrollTop > this.stickyTop
-      this.partsTop.forEach((value, id) => {
-        if (scrollTop > value && (!this.partsTop[id + 1] || scrollTop < this.partsTop[id + 1]) && this.activePart !== id) {
+      this.activeNavPartsTop.forEach((value, id) => {
+        if (scrollTop > value && (!this.activeNavPartsTop[id + 1] || scrollTop < this.activeNavPartsTop[id + 1]) && this.activeNavPartsTop !== id) {
           this.activePart = id
           // swiper不支持靠左情况下居中，通过计算模拟
           if (id <= this.navCenterMin) {
@@ -246,7 +258,7 @@ export default {
           } else if (id < this.navCenterMax) {
             this.navSwiper.slideTo(id - this.navCenterMin, 500, false)
           } else {
-            this.navSwiper.slideTo(this.partsTop.length - this.navCenterMin * 2, 500, false)
+            this.navSwiper.slideTo(this.activeNavPartsTop.length - this.navCenterMin * 2, 500, false)
           }
         }
       })
@@ -259,6 +271,11 @@ export default {
         let link = e.target.getAttribute('data-link')
         window.location.href = link
       }
+    },
+    scrollTo (e) {
+      var id = e.target.getAttribute('data-id')
+      var _top = this.themesTop[id] - this.stickyHeight
+      window.scrollTo(0, _top)
     }
   }
 }
@@ -330,74 +347,20 @@ export default {
     transition all .5s ease
   @-webkit-keyframes bounceIn {
     from {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+      opacity: 0;
+    }
 
-  30% {
-    -webkit-transform: scale3d(1.25, 0.75, 1);
-    transform: scale3d(1.25, 0.75, 1);
-  }
-
-  40% {
-    -webkit-transform: scale3d(0.75, 1.25, 1);
-    transform: scale3d(0.75, 1.25, 1);
-  }
-
-  50% {
-    -webkit-transform: scale3d(1.15, 0.85, 1);
-    transform: scale3d(1.15, 0.85, 1);
-  }
-
-  65% {
-    -webkit-transform: scale3d(0.95, 1.05, 1);
-    transform: scale3d(0.95, 1.05, 1);
-  }
-
-  75% {
-    -webkit-transform: scale3d(1.05, 0.95, 1);
-    transform: scale3d(1.05, 0.95, 1);
-  }
-
-  to {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes bounceIn {
     from {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+      opacity: 0;
+    }
 
-  30% {
-    -webkit-transform: scale3d(1.25, 0.75, 1);
-    transform: scale3d(1.25, 0.75, 1);
-  }
-
-  40% {
-    -webkit-transform: scale3d(0.75, 1.25, 1);
-    transform: scale3d(0.75, 1.25, 1);
-  }
-
-  50% {
-    -webkit-transform: scale3d(1.15, 0.85, 1);
-    transform: scale3d(1.15, 0.85, 1);
-  }
-
-  65% {
-    -webkit-transform: scale3d(0.95, 1.05, 1);
-    transform: scale3d(0.95, 1.05, 1);
-  }
-
-  75% {
-    -webkit-transform: scale3d(1.05, 0.95, 1);
-    transform: scale3d(1.05, 0.95, 1);
-  }
-
-  to {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+    to {
+      opacity: 1;
+    }
   }
 </style>

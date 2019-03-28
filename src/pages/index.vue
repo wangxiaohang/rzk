@@ -4,9 +4,15 @@
     <div class="left">首页</div>
     <div class="right"></div>
   </header>
-  <div class="search">
-      <input type="text" />
-      <p class="placeholder">搜索你想要的宝贝吧~</p>
+  <div class="search-container">
+    <div ref="search" :class="{'search':true,'left':placeholderLeft}">
+        <input ref="searchInput" type="text" name="searchi" id="searchi" @focus='searchFocus' @blur="searchBlur" v-model="searchValue" />
+        <label class="placeholder" for="searchi">
+          <span class="icon" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}"></span><span class="txt" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}" ref="searchLabel" v-show="searchValue.length <= 0">搜索你想要的宝贝吧~</span>
+        </label>
+        <div class="clear" v-show="searchValue.length>0" @click="clearSearchValue"></div>
+    </div>
+    <div class="mask"></div>
   </div>
   <Banner></Banner>
   <Hotsite :hotsites="hotsites"></Hotsite>
@@ -81,7 +87,13 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         }
-      }
+      },
+      showPlaceholder: true,
+      placeholderLeft: false,
+      searchInputWidth: 0,
+      searchLabelWidth: 0,
+      searchLabelLeftDist: 0,
+      searchValue: ''
     }
   },
   created () {
@@ -114,6 +126,10 @@ export default {
         console.log(err)
       })
   },
+  mounted () {
+    this.searchInputWidth = this.$refs.search.offsetWidth
+    this.searchLabelWidth = this.$refs.searchLabel.offsetWidth
+  },
   computed: {
     swiper () {
       return this.$refs.topicSwiper.swiper
@@ -129,8 +145,10 @@ export default {
       }
       // console.log(tempArr)
       return tempArr
+    },
+    placeholderLeftDist () {
+      return (this.searchInputWidth - this.searchLabelWidth) / 2 - 15
     }
-
   },
   components: {
     Banner,
@@ -140,6 +158,18 @@ export default {
     ProdsList,
     swiper,
     swiperSlide
+  },
+  methods: {
+    searchFocus () {
+      this.placeholderLeft = true
+    },
+    searchBlur () {
+      this.placeholderLeft = false
+    },
+    clearSearchValue () {
+      this.searchValue = ''
+      this.$refs.searchInput.focus()
+    }
   }
 }
 </script>
@@ -147,46 +177,80 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 common-border-radius = 6px
-translate(x,y,z)
-  transform translate3d(x,y,z)
-  -webkit-transform translate3d(x,y,z)
-  -moz-transform translate3d(x,y,z)
-  -ms-transform translate3d(x,y,z)
-  -o-transform translate3d(x,y,z)
-
 .search
   width 100%
   height 30px
   position relative
   margin-bottom 10px
+  background #eaeaea
+  border-radius common-border-radius
+  overflow hidden
+
+  .clear
+    position: absolute
+    width 20px
+    height 20px
+    top 5px
+    right 8px
+    background #666
+    border-radius 10px
+    &::before,&::after
+      content: ''
+      position absolute
+      width 12px
+      height 1px
+      background #eee
+      left 50%
+      top 50%
+    &::before
+      transform translate(-50%,-50%) rotate(-45deg)
+    &::after
+      transform translate(-50%,-50%) rotate(45deg)
 
   input
     display block
     width 100%
     height 30px
-    line-height 30px
-    background #F5F5F5
-    border-radius common-border-radius
-    padding 0 10px
+    font-size 14px
+    line-height 16px
+    background transparent
+    padding 7px 10px 7px 30px
+    // caret-color #999
+    // 设置字体颜色 和 光标颜色
+    transition all .3s .1s ease-out
+    color transparent
+    caret-color transparent
+    text-shadow: 0px 0px 0px #999 // 字体阴影颜色
+    -webkit-text-fill-color transparent // 字体填充颜色透明，以显示阴影
+  input::first-line
+    color transparent
 
-  p
+  .placeholder
     font-size 12px
     color #999
+    display inline-block
+    height 30px
+    line-height 30px
+    width 100%
     position absolute
-    left 50%
-    top 50%
-    translate(-50%,-50%,0)
-    padding-left 17px
-
-  p::before
-    content ''
-    position: absolute
     left 0
-    top 50%
-    translate(0,-50%,0)
-    width 12px
-    height 12px
-    background url('../assets/img/index/search.png') no-repeat center/cover
+    top 0
+    span
+      display inline-block
+      transition all .2s ease-out
+    .icon
+      vertical-align top
+      margin 8px
+      width 14px
+      height 14px
+      background url('../assets/img/index/search.png') no-repeat center/cover
+
+.search.left
+  input
+    color #666
+    caret-color #666
+  input::first-line
+    color #666
 
 .plays .cards,
 .procards.three
@@ -223,6 +287,4 @@ translate(x,y,z)
         color #fff
         background-color rgba(0,0,0,.4)
         text-align center
-    // .swiper-slide:first-child
-    //   margin-right 20px
 </style>

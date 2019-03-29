@@ -1,6 +1,6 @@
 <template>
   <div id="category">
-    <header>
+    <header ref="header">
       <div class="left">分类</div>
       <transition name="fade">
         <div class="box" v-if="show"></div>
@@ -8,8 +8,8 @@
       <div class="right" @click="show = !show"></div>
     </header>
     <div class="category-shop clearfix">
-      <nav class="left">
-        <ul class="categor-right-ul">
+      <nav ref='left' class="left" :style="{'height':leftHeight+'px','position':'fixed','top':headerHeight+'px','left':'0'}">
+        <ul class="categor-right-ul" :style="{'height':leftHeight+'px'}">
           <li v-for="(item,index) in naveLeftData" :key="index"
               :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
               v-on:click="navClickFn(index,item.title)">
@@ -17,7 +17,7 @@
           </li>
         </ul>
       </nav>
-      <div class="right" v-loading="loading">
+      <div class="right" v-loading="loading" :style="{'paddingLeft':leftWidth+'px','paddingTop':headerHeight+'px'}">
         <router-view :id="navIndex" :category="categoryList"></router-view>
       </div>
     </div>
@@ -38,7 +38,10 @@ export default {
       categoryList: [],
       naveLeftData: [],
       banner: [],
-      loading: true
+      loading: true,
+      leftHeight: 0,
+      headerHeight: 0,
+      leftWidth: 0
     }
   },
   created: function () {
@@ -48,6 +51,14 @@ export default {
     this.getCatesData()
     // setTimeout(this.getBannersData, 300)
     setTimeout(this.getCategoryData, 1000)
+  },
+  mounted () {
+    this.header = this.$refs.header
+    this.left = this.$refs.left
+    this.leftWidth = this.left.offsetWidth
+    this.headerHeight = this.header.offsetHeight
+    let windowHeight = window.innerHeight || document.documentElement.clientWidth || document.body.clientWidth || 0
+    this.leftHeight = windowHeight - this.headerHeight - 60
   },
   methods: {
     navClickFn: function (index, category) {
@@ -127,7 +138,10 @@ header .box
   overflow hidden
   Header
     padding 0 8px
-    position relative
+    position fixed
+    top 0
+    width 100%
+    background #fff
     .right
       width 18px
       height 18px
@@ -141,8 +155,11 @@ header .box
     display flex
     nav.left
       width 20%
-      overflow-x hidden
-      overflow-y scroll
+      overflow hidden
+      z-index 20
+      ul
+        overflow-x hidden
+        overflow-y scroll
       .category-left-item
         display block
         text-align center
@@ -162,12 +179,10 @@ header .box
         position absolute
         top 10px
         left 0px
-    div.right
-      width 80%
-      overflow-x hidden
-      overflow-y scroll
-    div.right::-webkit-scrollbar
-      display none
+    // div.right
+    //   width 100%
+    // div.right::-webkit-scrollbar
+    //   display none
     nav.left::-webkit-scrollbar
       display none
 </style>

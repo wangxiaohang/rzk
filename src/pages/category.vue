@@ -7,7 +7,7 @@
       </transition>
       <div class="right" @click="show = !show"></div>
     </header>
-    <div class="category-shop">
+    <div class="category-shop clearfix">
       <nav class="left">
         <ul class="categor-right-ul">
           <li v-for="(item,index) in naveLeftData" :key="index"
@@ -125,7 +125,6 @@ header .box
   width 100%
   height 100%
   overflow hidden
-  position relative
   Header
     padding 0 8px
     position relative
@@ -138,10 +137,7 @@ header .box
       background url('../assets/img/index/search.png') no-repeat center/cover
   .category-shop
     width 100%
-    padding 0px
-    position absolute
-    top 40px
-    bottom 0
+    margin-top 5px
     display flex
     nav.left
       width 20%

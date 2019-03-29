@@ -1,6 +1,6 @@
 <template>
   <div class="bottom" id='app-bottom'>
-    <router-link class="item" v-for="(item,index) in IconData" :key="index" :to="item.href">
+    <router-link class="item" v-for="(item,index) in IconData" :key="index" :to="bottomClickFn(item.href)">
       <img :src="item.urlNone" class="none" />
       <img :src="item.urlActive" class="active" />
       {{ item.des }}
@@ -45,6 +45,14 @@ export default {
     }
   },
   methods: {
+    bottomClickFn: function (url) {
+      const num = this.$route.params.id ? this.$route.params.id : 0
+      if (url === '/category/0') {
+        return '/category/' + num
+      } else {
+        return url
+      }
+    }
   }
 }
 </script>
@@ -54,7 +62,7 @@ export default {
     padding: 10px 0;
     position: fixed;
     bottom: 0;
-    z-index: 99;
+    z-index: 9999;
     background-color: #fff;
     -webkit-appearance: none;
     box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);

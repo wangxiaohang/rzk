@@ -2,14 +2,16 @@
   <div id="category">
     <header ref="header">
       <div class="left">分类</div>
-      <transition name="fade">
-        <div class="box" v-if="show"></div>
-      </transition>
+      <div class="search-container">
+        <transition name="fade">
+          <input type="text" placeholder="想找什么" v-if="show" />
+        </transition>
+      </div>
       <div class="right" @click="show = !show"></div>
     </header>
     <div class="category-shop clearfix">
-      <nav ref='left' class="left" :style="{'height':leftHeight+'px','position':'fixed','top':headerHeight+'px','left':'0'}">
-        <ul class="categor-right-ul" :style="{'height':leftHeight+'px'}">
+      <nav ref='left' class="left" :style="{'position':'fixed','top':headerHeight+'px','left':'0','bottom':'60px'}">
+        <ul class="categor-right-ul">
           <li v-for="(item,index) in naveLeftData" :key="index"
               :class="navIndex==index?'category-left-item active':'category-left-item'" :data-id="item.id"
               v-on:click="navClickFn(index,item.title)">
@@ -17,7 +19,7 @@
           </li>
         </ul>
       </nav>
-      <div class="right" v-loading="loading" :style="{'paddingLeft':leftWidth+'px','paddingTop':headerHeight+'px'}">
+      <div ref="right" class="right" v-loading="loading" :style="{'left':leftWidth+'px','top':headerHeight+'px','bottom':'60px'}">
         <router-view :id="navIndex" :category="categoryList"></router-view>
       </div>
     </div>
@@ -55,6 +57,7 @@ export default {
   mounted () {
     this.header = this.$refs.header
     this.left = this.$refs.left
+    this.right = this.$refs.right
     this.leftWidth = this.left.offsetWidth
     this.headerHeight = this.header.offsetHeight
     let windowHeight = window.innerHeight || document.documentElement.clientWidth || document.body.clientWidth || 0
@@ -88,6 +91,7 @@ export default {
           // console.log(res['data']['data']['list'])
           that.categoryList = res['data']['data']['list']
           that.loading = false
+          that.right.scrollTop = 0
         }).catch(function (err) {
           console.log('获取' + that.navIndex + '分类下内容错误')
           console.log(err)
@@ -122,26 +126,45 @@ export default {
 .fade-leave-active
   animation bounce-in .5s reverse
 @keyframes bounce-in{
-  0% {transform: scale(0)}
-  50% {transform: scale(1.5)}
-  100% {transform: scale(1)}
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
 }
-header .box
-  width 120px
-  height 20px
-  background lightgreen
+.search-container
+  width 200px
+  height 40px
   float right
-  margin 10px 40px
+  margin-right 34px
+  overflow hidden
+header input
+  width 198px
+  height 30px
+  margin-top 5px
+  padding 0 10px
+  border-radius 6px 0 0 6px
+  background #eaeaea
+  display block
 #category
   width 100%
   height 100%
   overflow hidden
+  user-select none
   Header
     padding 0 8px
     position fixed
+    z-index 999
+    left 0
     top 0
     width 100%
     background #fff
+    box-shadow: 0 .2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 .2px 4px rgba(0, 0, 0, 0.1);
     .right
       width 18px
       height 18px
@@ -155,11 +178,17 @@ header .box
     display flex
     nav.left
       width 20%
-      overflow hidden
-      z-index 20
+      background #F6F6F6
+      // overflow hidden
+      overflow-x hidden
+      overflow-y scroll
+      -webkit-overflow-scrolling touch
+      z-index 100
+      -ms-overflow-style: none
+      ul::-webkit-scrollbar
+        display none
       ul
-        overflow-x hidden
-        overflow-y scroll
+        -ms-overflow-style: none
       .category-left-item
         display block
         text-align center
@@ -167,10 +196,12 @@ header .box
         height 40px
         line-height 40px
         color grey
+        background #F6F6F6
       .category-left-item.active
         color black
         font-weight 600
         position relative
+        background #fff
       .category-left-item.active:before
         content ""
         width 2px
@@ -179,7 +210,12 @@ header .box
         position absolute
         top 10px
         left 0px
-    // div.right
+    div.right
+      position fixed
+      z-index 100
+      overflow-x hidden
+      overflow-y scroll
+      -webkit-overflow-scrolling touch
     //   width 100%
     // div.right::-webkit-scrollbar
     //   display none

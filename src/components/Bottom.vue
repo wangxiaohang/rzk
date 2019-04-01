@@ -65,8 +65,8 @@ export default {
     z-index: 9999;
     background-color: #fff;
     -webkit-appearance: none;
-    box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -0.2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 -0.2px 4px rgba(0, 0, 0, 0.1);
   }
 
   #app-bottom div.icon {

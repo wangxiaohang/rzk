@@ -14,6 +14,8 @@ beforeUpdate ~ Updated：data发生变化，会被依次调用
 > 页面快速滑动出现空白
 ##### index
 > iphone5c的safari光标颜色总是蓝色，无法改变
+##### category
+> 左右布局，absolute情况下，父元素有弹性效果；全部fixed情况（目前），有时滑动到顶级scrollview，滑不动
 
 ## pending
 > banner-detail: 页面平滑滚动

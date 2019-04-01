@@ -6,9 +6,9 @@
   </header>
   <div class="search-container">
     <div ref="search" :class="{'search':true,'left':placeholderLeft}">
-        <input ref="searchInput" type="text" name="searchi" id="searchi" @focus='searchFocus' @blur="searchBlur" v-model="searchValue" />
+        <input ref="searchInput" type="text" name="searchi" id="searchi" @keyup='searchKeyup' @focus='searchFocus' @blur="searchBlur" v-model="searchValue" />
         <label class="placeholder" for="searchi">
-          <span class="icon" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}"></span><span class="txt" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}" ref="searchLabel" v-show="searchValue.length <= 0">搜索你想要的宝贝吧~</span>
+          <span class="icon" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}"></span><span class="txt" :style="{'transform':'translateX('+ (placeholderLeft || searchValue.length>0 ? 0 : placeholderLeftDist) +'px)'}" ref="searchLabel" v-show="showPlaceholder">搜索你想要的宝贝吧~</span>
         </label>
         <div class="clear" v-show="searchValue.length>0" @click="clearSearchValue"></div>
     </div>
@@ -166,8 +166,18 @@ export default {
     searchBlur () {
       this.placeholderLeft = false
     },
+    searchKeyup (e) {
+      var keycode = e.keyCode || 0
+      var valid = (keycode > 47 && keycode < 58) || keycode === 32 || keycode === 13 || (keycode > 64 && keycode < 91) || (keycode > 95 && keycode < 112) || (keycode > 185 && keycode < 193) || (keycode > 218 && keycode < 223)
+      if (!valid && this.searchValue.length <= 0) {
+        this.showPlaceholder = true
+      } else {
+        this.showPlaceholder = false
+      }
+    },
     clearSearchValue () {
       this.searchValue = ''
+      this.showPlaceholder = true
       this.$refs.searchInput.focus()
     }
   }
@@ -177,6 +187,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 common-border-radius = 6px
+.index
+  padding 0 8px
 .search
   width 100%
   height 30px
@@ -215,15 +227,14 @@ common-border-radius = 6px
     line-height 16px
     background transparent
     padding 7px 10px 7px 30px
-    // caret-color #999
     // 设置字体颜色 和 光标颜色
     transition all .3s .1s ease-out
-    color transparent
-    caret-color transparent
-    text-shadow: 0px 0px 0px #999 // 字体阴影颜色
-    -webkit-text-fill-color transparent // 字体填充颜色透明，以显示阴影
-  input::first-line
-    color transparent
+    color #999
+    // caret-color #333
+    // text-shadow: 0px 0px 0px #999 // 字体阴影颜色
+    // -webkit-text-fill-color transparent // 字体填充颜色透明，以显示阴影
+  // input::first-line
+  //   color #333
 
   .placeholder
     font-size 12px

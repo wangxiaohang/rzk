@@ -10,7 +10,7 @@
 </template>
 <style lang="stylus" scoped>
 .content
-  padding 0px 8px 60px
+  padding 0px 0px 60px
   position relative
 .content-fade-enter-active, .content-fade-leave-active
   transition opacity .1s ease

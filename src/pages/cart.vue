@@ -20,15 +20,13 @@
       <div class="recommend">
         <p class="title">你可能还想租</p>
         <div class="cards">
-          <div class="swiper-container" id="recommend-swiper">
-            <div class="swiper-wrapper">
-              <div v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
-                <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
-                <p class="tit">{{ item.title }}</p>
-                <p class="price">{{ item.price }}</p>
-              </div>
-            </div>
-          </div>
+          <swiper :options="recommendSwiepr" ref="recommendSwiper" id="recommend-swiper">
+            <swiper-slide v-for="(item,index) of recommandTopics" :key="index" class="swiper-slide">
+              <div class="img" :style="{'backgroundImage':'url('+item.img+')'}"></div>
+              <p class="tit">{{ item.title }}</p>
+              <p class="price">{{ item.price }}</p>
+            </swiper-slide>
+          </swiper>
         </div>
       </div>
 
@@ -45,7 +43,8 @@
   </div>
 </template>
 <script>
-import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import noneURL from '@/assets/img/none3.png'
 import Cartcard from '@/components/Cartcard.vue'
 export default {
@@ -112,7 +111,16 @@ export default {
           title: '智能儿童手表',
           price: '￥50/天'
         }
-      ]
+      ],
+      recommendSwiepr: {
+        direction: 'horizontal',
+        loop: false,
+        autoplay: false,
+        slidesPerView: 'auto',
+        slidesOffsetBefore: 8,
+        slidesOffsetAfter: 8
+        // spaceBetween: 20
+      }
     }
   },
   created: function () {
@@ -120,18 +128,9 @@ export default {
     // this.getUser()
   },
   components: {
-    Cartcard
-  },
-  mounted () {
-    this.topicSwiper = new Swiper('#recommend-swiper', {
-      direction: 'horizontal',
-      loop: false,
-      autoplay: false,
-      slidesPerView: 'auto',
-      slidesOffsetBefore: 8,
-      slidesOffsetAfter: 8
-      // spaceBetween: 20
-    })
+    Cartcard,
+    swiper,
+    swiperSlide
   },
   methods: {
     getUser () {

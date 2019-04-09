@@ -1,0 +1,80 @@
+{
+  "success": true,
+  "returnCode": "SUCCESS",
+  "returnMessage": null,
+  "data": {
+    "hotWord": {
+      "data": [
+        {
+          "color": "",
+          "query": "卫衣",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "卫衣"
+        },
+        {
+          "color": "#ff4466",
+          "query": "口红",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "口红"
+        },
+        {
+          "color": "",
+          "query": "春装",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "春装"
+        },
+        {
+          "color": "",
+          "query": "毛衣",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "毛衣"
+        },
+        {
+          "color": "#ff4466",
+          "query": "汉服",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "汉服"
+        },
+        {
+          "color": "",
+          "query": "裤子",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "裤子"
+        },
+        {
+          "color": "",
+          "query": "外套",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "外套"
+        },
+        {
+          "color": "",
+          "query": "鞋子",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "鞋子"
+        },
+        {
+          "color": "",
+          "query": "裙子",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "裙子"
+        },
+        {
+          "color": "#ff4466",
+          "query": "连衣裙",
+          "acm": "3.mce.1_10_11k.37705.28553.8airprkoLriCu.p_3_hotSearchKeywordRec-mid_37705-sd_115-mdt_hotWord-dit_26-lc_201",
+          "frontword": "连衣裙"
+        }
+      ],
+      "success": true
+    },
+    "sketch": {
+      "data": {
+        "query": "毛衣",
+        "acm": "3.mce.1_4_11k.39084.77211.rP18drkoLriCz.p_12_hotSearchKeywordRec-mid_39084-sd_115-mdt_sketch-dit_26-lc_201",
+        "frontword": "毛衣"
+      },
+      "success": true
+    }
+  }
+}

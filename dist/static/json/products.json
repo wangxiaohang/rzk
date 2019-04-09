@@ -1,0 +1,27 @@
+[
+  {
+    "img": "/static/img/shop1.png",
+    "title": "美宝莲弯弯睫毛膏",
+    "price": "￥30/天"
+  }, {
+    "img": "/static/img/shop2.png",
+    "title": "米家IH电饭煲3L",
+    "price": "￥20/天"   
+  }, {
+    "img": "/static/img/shop3.png",
+    "title": "室内健身哑铃器材",
+    "price": "￥20/天"   
+  }, {
+    "img": "/static/img/shop4.png",
+    "title": "精致花盆植物支架",
+    "price": "￥50/天"   
+  }, {
+    "img": "/static/img/shop5.png",
+    "title": "立体声环绕耳机",
+    "price": "￥25/天"   
+  }, {
+    "img": "/static/img/shop6.png",
+    "title": "天蓝色唯美遮挡纱帘",
+    "price": "￥30/天"   
+  }
+]

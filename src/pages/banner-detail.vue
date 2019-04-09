@@ -229,7 +229,7 @@ export default {
   created () {
     // 获取往期回顾列表
     var that = this
-    axios.get('./static/json/banner-review.json')
+    axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/banner-review.json')
       .then(function (response) {
         that.review.content.list = response['data']['data']['133851']['list']
       })

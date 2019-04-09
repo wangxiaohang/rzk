@@ -100,7 +100,7 @@ export default {
     // this.products = productsJson
     var that = this
     // 获取热站数据
-    axios.get('./static/json/hotsite.json')
+    axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/hotsite.json')
       .then(function (response) {
         that.hotsites = response['data']['0']['data']['132826']['list']
       })
@@ -108,7 +108,7 @@ export default {
         console.log(err)
       })
     // 获取流行元素、精选专题
-    axios.get('./static/json/topic.json')
+    axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/topic.json')
       .then(function (response) {
         that.hotElms = response['data']['data']['123003']['list']
         that.recommandTopics = response['data']['data']['122995']['list']
@@ -117,7 +117,7 @@ export default {
         console.log(err)
       })
     // 获取猜你喜欢
-    axios.get('./static/json/youMayLike-0.json')
+    axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/youMayLike-0.json')
       .then(function (response) {
         that.products = response['data']['data']['wall']['docs']
         // console.log(response['data']['data']['wall']['docs'])

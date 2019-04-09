@@ -38,7 +38,7 @@ export default {
   created () {
     var that = this
     // 获取banner数据
-    axios.get('./static/json/banner.json')
+    axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/banner.json')
       .then(function (response) {
         that.bannerURLs = response['data']['data']['122224']['list']
       })

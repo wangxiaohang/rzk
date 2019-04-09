@@ -16,7 +16,7 @@ import bannerDetail from '@/pages/banner-detail'
 Vue.use(Router)
 
 var router = new Router({
-  mode: 'history', // 可以是去掉#号
+  // mode: 'history', // 可以是去掉#号
   routes: [
     {
       path: '/',

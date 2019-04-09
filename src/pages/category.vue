@@ -86,7 +86,7 @@ export default {
       // this.loading = false
 
       var that = this
-      axios.get('../static/json/cate-' + that.navIndex + '.json')
+      axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/cate-' + that.navIndex + '.json')
         .then(function (res) {
           // console.log(res['data']['data']['list'])
           that.categoryList = res['data']['data']['list']
@@ -103,7 +103,7 @@ export default {
       //   this.category = this.naveLeftData[this.navIndex].title
       // })
       var that = this
-      axios.get('../static/json/cates.json')
+      axios.get('https://wangxiaohang.github.io/rzk/dist/static/json/cates.json')
         .then(function (res) {
           that.naveLeftData = res['data']['data']['117330']['list']
         }).catch(function (err) {
